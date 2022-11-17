@@ -11,7 +11,7 @@
         i1 - chaining
     )
     (:init
-        (ToM start, Robot knows i1)
+        (ToM start Robot knows i1)
         (ToM i1 Antonio isSad end)
         
     )
