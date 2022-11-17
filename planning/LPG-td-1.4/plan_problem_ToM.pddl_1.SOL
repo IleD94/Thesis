@@ -1,0 +1,13 @@
+
+; Version LPG-td-1.4
+; Seed 114572004
+; Command line: ./lpg-td -o domain_ToM2.pddl -f problem_ToM.pddl -n 10000000 
+; Problem problem_ToM.pddl
+; Actions having STRIPS duration
+; Time 0.01
+; Search time 0.01
+; Parsing time 0.00
+; Mutex time 0.00
+; NrActions 1
+
+0:   (WORKS START ROBOT ISSAD START) [1]
