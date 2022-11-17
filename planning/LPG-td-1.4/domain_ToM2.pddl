@@ -29,7 +29,7 @@
     
     (:action works 
         :parameters ( ?x - chaining  ?y - agent ?z - states ?w - chaining)
-        :precondition (and (ToM start, robot, isSad, end))
+        :precondition (and (ToM start robot isSad end))
         :effect (and (test-ok))
     )
     
