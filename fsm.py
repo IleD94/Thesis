@@ -4,13 +4,26 @@ import sys
 import requests
 import time
 from collections import OrderedDict
+from threading import Thread
 
+class IlMioThread (Thread):
+   def __init__(self, nome, durata):
+      Thread.__init__(self)
+      self.nome = nome
+      self.durata = durata
+   def run(self):
+      print ("Thread '" + self.name + "' avviato")
+      face_rec()
+      print ("Thread '" + self.name + "' terminato")
+
+def face_rec() :
+    
 
 class StateMachine:
 
     def state_zero (self):
         # state zero: connection to pepper and its services, learning phase of faces
-        global session, url,tts, tts2
+        global session, url,tts, tts2,tts1,tts4
         url='http://127.0.0.1:5000/'
         parser = argparse.ArgumentParser()
         parser.add_argument("--ip", type=str, default="130.251.13.102",
@@ -34,21 +47,30 @@ class StateMachine:
         tts2=session.service("ALMemory")
         self.current_state="state_one"
         tts1 = session.service("ALFaceDetection")
+        tts3 = session.service("ALSoundDetection")
+        tts1.setRecognitionEnabled(True)
         tts1.isRecognitionEnabled()
         a=tts1.isTrackingEnabled()
-        #print (a)
-        time.sleep(5)
-        #w=tts1.learnFace("Ilenia")
-        #print (w)
+        tts1.learnFace("Federico")
+        tts4=session.service("ALSpeechRecognition")
+        #tts4.removeAllContext()
+        tts4.setVocabulary(["no", "yes", "bob", "federico"],True)
+        #tts4.subscribe("test_ASR")
+        #time.sleep(5)
+        #tts4.unsubscribe("test_ASR")
+        
+        tts4.setAudioExpression(True)
+        time.sleep(3)
         o=tts2.getData("FaceDetected")
         #o=tts1.subscribe("Test_Face")
         #print (o[1])
         #tts1.forgetPerson("Ilenia")
         lista=tts1.getLearnedFacesList()
-        #print (lista)
+        print (lista)
         #print (o)
         #a = FaceDetected()
         #print (a)
+        time.sleep(4)
 
 
     
@@ -85,14 +107,7 @@ class StateMachine:
         ('action2' , 'ask_move_obj'),
         ('action3' , 'ask_call_someone'),
         ('action4' , 'ask_someone_obj_place'),
-        ('action5' , 'laugh'),
-        #('action6' , 'know_isputting_infer_know_isin'),
-        #('action7' , 'know_iamputting_infer_know_isin'),
-        #('action8' , 'know_isgoing_infer_know'),
-        #('action9' , 'know_isin_infer_know_isgoing'),
-        #('action10' , 'know_isgoing_afterphase'),
-        #('action11' , 'know_iamgoing_afterphase'),
-        #('action12' , 'test')
+        ('action5' , 'laugh')
         ])
         
         myplan2 = my_plan.replace("'", " ")
@@ -108,6 +123,19 @@ class StateMachine:
     def state_three(self):
         # state three: execution of actions and monitoring(il monitoraggio non fa parte delle azioni che arrivano dal planner, crearlo in base all'azione)
         i=0
+        people = []
+        o=tts2.getData("FaceDetected",0)
+        if len(o)>1:
+            faceInfoArray=o[1]
+            for i in range(len(faceInfoArray)-1):
+                faceID=faceInfoArray[i]
+                faceName=faceID[1]
+                people.append(faceName[2])
+            #tts1.setRecognitionEnabled(False)
+            w = tts1.isRecognitionEnabled()
+            print (w)
+            print (people)
+            print (len(people))
         #time.sleep(5)
         for action in actions:
         # print (actions.get(action))
@@ -119,30 +147,100 @@ class StateMachine:
             else:
                 a=u[0]
             #print (u)
-            if a in str(actions) :
-                n = my_plan.count(actions.get(action))
-                #print (n)
-                #time.sleep (4)
-                tts.setLanguage('English')
-                #tts.say(a)
-                o=tts2.getData("FaceDetected",0)
-
-                faceInfoArray=o[1]
-                #print (faceInfoArray)
-                # print (len(faceInfoArray))
-                # faceID=faceInfoArray[0]
-                # faceName=faceID[1]
-                # print(faceName[2])
-                # faceID=faceInfoArray[1]
-                # faceName=faceID[1]
-                # print(faceName[2])
-                people = []
-                for i in range(len(faceInfoArray)-1):
-                    faceID=faceInfoArray[i]
-                    faceName=faceID[1]
-                    people.append(faceName[2])
-                print (people)
+            tts.setLanguage('English')
+            if a in str(actions.get(action)) :
+                #tt3=session.service("ALAnimatedSpeech")
+                configuration = {"bodyLanguageMode":"contextual"}
+                if a == actions.get('action1'):
+                    if len(people)>0:
+                        global myperson1
+                        thatperson = people
+                        myperson1 = str(people)
+                        tts.say("Hello,I am Pepper!"+ myperson1 + "could you go out,please?")              
+                        # w=tts1.setRecognitionEnabled(True)
+                        # print (w)
+                        print(people)
+                        print (myperson1)
+                        print("QUI")
+                        print(thatperson)
+                        if any(item in thatperson for item in people):
+                            self.current_state = "state_one"
+                            break    
+                if a == actions.get('action2'):
+                    while not (len(people)>0):
+                        print (people)
+                        time.sleep(1)
+                    myperson= str(people)
+                    tts.say(myperson+"could you move the ball into the box,please?")
+                    time.sleep(6)
+                    tts.say(myperson+"have you put the ball into the box?")
+                    tts4.subscribe("WordRecognized")
+                    time.sleep(5)
+                    answ=tts2.getData("WordRecognized")
+                    print(answ)
+                    tts4.unsubscribe("WordRecognized")
+                    #tts4.removeAllContext()
+                    while ("no" in str(answ)):
+                        tts.say(myperson+"have you put the ball into the box?")
+                        tts4.setLanguage('English')
+                        tts4.subscribe("WordRecognized")
+                        time.sleep(5)
+                        answ=tts2.getData("WordRecognized")
+                        print(answ)
+                        tts4.unsubscribe("WordRecognized")
+                        #tts4.removeAllContext()
                 
+                if a == actions.get('action3'):
+                    myperson= str(people)
+                    print (people)
+                    print (myperson) #############problema con questo nome, risolvere con piu persone per esperimento
+                    tts.say(myperson+"Could you call"+ myperson1+ "back, please?")
+                    time.sleep(4)
+                    tts4.subscribe("WordRecognized")
+                    time.sleep(5)
+                    answ=tts2.getData("WordRecognized")
+                    print(answ)
+                    tts4.unsubscribe("WordRecognized")
+                    #tts4.removeAllContext()
+                    while not ("yes" in str(answ)): #################si puo mettere anche si o no
+                        tts4.setLanguage('Italian')
+                        tts.say(myperson+"have you called federico?")
+                        tts4.subscribe("WordRecognized")
+                        time.sleep(5)
+                        answ=tts2.getData("WordRecognized")
+                        print (answ)
+                        tts4.unsubscribe("WordRecognized")
+                if a == actions.get('action4'):
+                    time.sleep(4)
+                    print (myperson1)
+                    while not (myperson1 in str(people)):
+                        print(people)
+                        time.sleep(1)
+                    tts.say ("Hi "+ myperson1+ "Do you know where is the ball?")
+                    tts4.subscribe("WordRecognized")
+                    time.sleep(5)
+                    answ=tts2.getData("WordRecognized")
+                    print (answ)
+                    tts4.unsubscribe("WordRecognized")
+                    #tts4.removeAllContext()
+                    if ("yes" in str(answ)):
+                        self.current_state="state_one"
+                        break
+                    else:
+                        tts.say("are you sad?")
+                        tts4.subscribe("WordRecognized")
+                        time.sleep(5)
+                        answ=tts2.getData("WordRecognized")
+                        print (answ)
+                        tts4.unsubscribe("WordRecognized")
+                        #tts4.removeAllContext()
+                        if ("no" in str(answ)):
+                            self.current_state="state_one"
+                            break
+                if a== a == actions.get('action5'):
+                    tts.say ("I'm happy!! I reached my goal")
+                    exit (0)
+
             ########################### SE IL MONITORAGGIO DA ESITO NEGATIVO METTERE UN BREAK, COSi TORNA ALLO STATO ONE
             else:
                 break
