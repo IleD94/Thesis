@@ -3,7 +3,7 @@ import argparse
 import sys
 import requests
 import time
-from fsm import StateMachine
+from fsm2 import StateMachine
 from collections import OrderedDict
 
 if __name__ == "__main__":

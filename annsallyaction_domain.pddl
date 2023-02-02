@@ -63,12 +63,9 @@
     :precondition (and 
             (Know ?x1 ?a1 ?x2 ?v)
             (isIn ?x2 ?a2 ?p ?v)
-
             (Know ?x1 ?a1 ?x3 ?v)
             (isIn ?x3 ?e ?p ?v)
-
             (hasStartId ?a1 ?x1)
-
             (disjuncted ?a2 ?e)
     )
     :effect (and 
@@ -98,13 +95,10 @@
     :precondition (and 
             (Know ?x1 ?a1 ?x2 ?v)
             (isIn ?x2 ?a2 ?p1 ?v)
-
             (Know ?x1 ?a1 ?x3 ?v)
             (isIn ?x3 ?a3 ?p1 ?v)
-
             (Know ?x1 ?a1 ?x4 ?v)
             (isPutting ?x4 ?a2 ?o ?p2 ?v)
-
             (hasStartId ?a3 ?x1)
             (disjuncted ?a2 ?a3)
     )
@@ -119,7 +113,6 @@
     :precondition (and 
             (Know ?x1 ?a1 ?x2 ?v1)
             (isPutting ?x2 ?a2 ?o ?p ?v1)
-
             (hasStartId ?a1 ?x1)
             (follow ?v2 ?v1)
             (disjuncted ?a1 ?a2)
@@ -166,13 +159,10 @@
     :precondition (and 
             (Know ?x1 ?a1 ?x2 ?v)
             (isIn ?x2 ?a2 ?p1 ?v)
-
             (Know ?x1 ?a1 ?x3 ?v)
             (isIn ?x3 ?a3 ?p1 ?v)
-
             (Know ?x1 ?a1 ?x4 ?v)
             (isGoing ?x4 ?a2 ?p1 ?p2 ?v)
-
             (hasStartId ?a1 ?x1)
             (disjuncted ?a2 ?a3) 
     )

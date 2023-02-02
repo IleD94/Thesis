@@ -1,3 +1,4 @@
+
 import qi
 import argparse
 import sys
@@ -14,8 +15,10 @@ if __name__ == "__main__":
     machine.current_state = "state_zero"
 
     # loop forever
-    while True:
+    ret=True
+    while ret:
         # get the method for the current state
         state_method = getattr(machine, machine.current_state)
         # call the method
         state_method()
+#exit(0)

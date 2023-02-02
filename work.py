@@ -1,17 +1,16 @@
 import requests
 from collections import OrderedDict
-import re
 
 def find_all_indices(string, char):
     indices = []
     index = -1
     while True:
         index = string.find(char, index+1)
+        #string.replace(string[index])
         if index == -1:
             break
         indices.append(index)
     return indices
-
 
 url='http://127.0.0.1:5000/'
 mydir = "C:\Users\Lemonsucco\Desktop\Pepper\\"
@@ -49,10 +48,14 @@ my_plan_last = my_plan_3.replace(')', ' ')
 my_plan_splitted = my_plan_last.split(' , ')
 n_action=len(my_plan_splitted)
 #print (my_plan_splitted[1])
-my_string=my_plan_splitted[0].split(" ")
+my_string=[]
+for i in range (0,n_action):
+    my_string.append (my_plan_splitted[i].split(" "))
 #print (my_string[3:len(my_string)-1]) #indici per avere i termini grounded del piano tipo [i][j] bisogna fare il match con le condizioni
 #print (len (my_string))
-
+my_new=[]
+ind_action=[]
+parameters=[]
 for action in actions:
     for i, s in enumerate(my_domain_list):
         if actions.get(action) in s:
@@ -63,6 +66,7 @@ for i, s in enumerate(my_domain_list):
         my_new.append(i-1)
 
 my = []
+
 for i in range(len(my_new)):
     my.append (my_domain_list [ind_action[i]:my_new[i]]) 
 
@@ -72,66 +76,74 @@ for i in (range(len (my))):
     righe_parametri.append (my_domain_list[parameters[i]])
 #print (righe_parametri) #lista dei parametri
 
-print (my)
-print (my[0][0])
-print (righe_parametri[0])
-print (my_string)
+#print (my)
+#print (my[1])
+#print (righe_parametri)
+#print (my_string)
+g=my[0][0] #matrice delle precondizioni
+print (righe_parametri)
+index_param=[]
+# k=0
+for i in range(len (righe_parametri)):
+    index_param.append(find_all_indices(righe_parametri[i], '?'))
+    
 
-f=find_all_indices(righe_parametri[0], '?')
-print(f)
-mychar=righe_parametri[0]
+parametri_matrix=[]
+parametri_matrix2=[]
+print (index_param)
+for j in range(len (index_param)):
+    for i in index_param[j]:
+        #print (index_param[j])
+        #myparam = index_param[j]
+        #print (myparam)
+    
+        #print (i)
+        parametri_matrix.append(righe_parametri[j][i+1])
+    parametri_matrix2.append(parametri_matrix)
+    
+#print (parametri_matrix)
+#print (parametri_matrix2)
+    
+# precond=[] 
+# every_precond=[]   
+# for j in range (len (my) ):
+#     for k in range (len ):
+#     precondizioni_azione=my[j]
+#     #print (precondizioni_azione)
+#     ################################forse puoi sare direttamente precondizioni_azione per il replace aggiungendo un k. pensarci 
+#     for k in range (precondizioni_azione)
+#     #print (len(precondizioni_azione))
+    #print (precondizioni_azione)
+    # for k in range (len (precondizioni_azione)):
+    #     precondizioni_a=precondizioni_azione[k]
+    #     precondizioni_a=precondizioni_a.replace('?','')
+    #     #print (precondizioni_a)
+    #     precond.append (precondizioni_a)
+    #     #print (precond)    
+    # every_precond.append(precond)
+        #print(precondizioni_a)
+#print (precond)
+#precond[0]
+#print (every_precond)
 
-my_param=[]
-for ind in f:
-    my_param.append(mychar[ind+1])
-print (my_param)
-g=my[0][0]
-j=0
-# for i in range (3,5):
-#     g= g.replace(myrep[j], my_string[i])
+#for k in range (len)
+
+
+# i=0
+# #print (my_string)
+# for i in range (len (my_string)-1):
+#     that_string=my_string[i] #righe piano frammentate parola per parola
+#     #print(that_string)
+#     precondio=precond
+#     #print(precondio)
+    # for parametro in parametri_matrix:
+    #   for k in range (3,len(that_string)-1):
+        #print (that_string[k])
+        #print (parametro)
+        #precondio.replace(parametro, that_string[k])
+        #print (precondio)
 #     j=j+1
 # print (g) 
 ##########FUNZIONA!!!!!! ADESSO FARLO PER TUTTI. BASTA FARE UN FOR IN MODO CHE MY POSSA CAMBIARE DA [0][0] SCORRERE GLI INDICI
 ######### COSI DA RIMPIAZZARE TUTTI I PARAMETRI
-
-def find_expected_predicates(action, domain, mydict):
-
-    ind_effects=[]
-    ind_action=[]
-    parameters=[]
-
-    for i, s in enumerate(domain):
-        if mydict.get(action) in s:
-            ind_action.append(i+3)
-            parameters.append (i+1)
-        if 'effect ' in s:
-            ind_effects.append(i-1)
-
-    my_precondition = []
-    for i in range(len(ind_effects)):
-        my_precondition.append (my_domain_list [ind_action[i]:ind_effects[i]]) 
-
-    righe_parametri=[]
-    for i in (range(len (my_precondition))):    
-        #print (my [i]) #lista delle precondizioni
-        righe_parametri.append (my_domain_list[parameters[i]])
-    #print (righe_parametri) #lista dei parametri
-
-    print (my_precondition)
-    print (righe_parametri[0])
-    print (my_string)
-
-    f=find_all_indices(righe_parametri[0], '?')
-    print(f)
-    mychar=righe_parametri[0]
-
-    my_param=[]
-    for ind in f:
-        my_param.append(mychar[ind+1])
-    print (my_param)
-    g=my_precondition[0][0]
-    j=0
-    for i in range (3,5):
-        g=g.replace(my_param[j], my_string[i])
-        j=j+1
-        print (g) 
+#print(len(my))
