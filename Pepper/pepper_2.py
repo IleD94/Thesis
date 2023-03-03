@@ -37,9 +37,9 @@ def set_autonomous_abilities(al, blinking, background, awareness, listening, spe
 if __name__ == "__main__":
 
  #PEPPER INITIALIZATION
-    url='http://127.0.0.1:5000/'
+    url='http://127.0.0.1:5005/'
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", type=str, default="130.251.13.132",
+    parser.add_argument("--ip", type=str, default="130.251.13.106",
                         help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--port", type=int, default=9559,
                         help="Naoqi port number")

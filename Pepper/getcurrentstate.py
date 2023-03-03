@@ -64,14 +64,14 @@ def get_expected_precondition(precondition_list, groundedterms,myparams, result)
 
 def start ():
     global my_plan_splitted
-    url='http://127.0.0.1:5003/'
+    url='http://127.0.0.1:5005/'
     mydir = "C:\Users\Lemonsucco\Desktop\Pepper\\"
-    domain_path = mydir+'thesis_domain3.pddl'
+    domain_path = mydir+'dominio_definitivo.pddl'
     my_domain_list=[]
     with open (domain_path, "r") as f:
         for line in f:
             my_domain_list.append(line.strip())
-    problem_path = mydir+'problem_created.pddl'
+    problem_path = mydir+'problema_definitivo.pddl'
     my_problem_list=[]
     with open (problem_path, "r") as f:
         for line in f:

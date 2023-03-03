@@ -43,7 +43,7 @@ class StateMachine:
         
         #Text to speech and setting language
         self.tts =arg_session.service ("ALTextToSpeech")
-        self.tts.setParameter ('speed', 85)
+        self.tts.setParameter ('speed', 75)
         self.tts.setLanguage('English')
         #self.tts.say ("Serena, Ilenia unfortunately said some hurtful things about you when you weren't around, so I thought you should know.")
         #Animated speech
@@ -55,7 +55,7 @@ class StateMachine:
         self.speech_recognition=arg_session.service("ALSpeechRecognition")
         self.speech_recognition.setVocabulary(["no", "yes"],True) 
         self.speech_recognition.setAudioExpression (True)
-        
+        self.list_sentence = []
         #face detection 
         self.face_detection = arg_session.service("ALFaceDetection")
 
@@ -139,6 +139,7 @@ class StateMachine:
     def state_three(self):
         # state three: execution of actions and monitoring
         #global i
+        personality = "manipulative"
         i=0
         n_action=len (self.myplan)-1
         
@@ -172,11 +173,13 @@ class StateMachine:
                     natural_speech = natural_dict.get (a)
                     print (natural_speech)
                     if action == "action1":
-                        personality = ". Make the sentence like a sadic person"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = "and to express my " + personality + " personality"
+                        sentence = openAI_client.start ('ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     if action == "action2":
-                        personality = ". Make the sentence like a manipulative person "
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and manipulative personality"
+                        sentence = openAI_client.start ('ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -210,11 +213,13 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[7], grounded_terms[12], grounded_terms[8], grounded_terms[11],a)
                     natural_speech = natural_dict.get (a)
                     if action == "action3":
-                        personality = ". Be sadic"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = "and to express my " + personality + " personality"
+                        sentence = openAI_client.start ('ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     if action == "action4":
-                        personality = ". Be manipulative"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = "and to express my" + personality + "and manipulative personality"
+                        sentence = openAI_client.start ('ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -249,27 +254,30 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[6], 'ball', grounded_terms[7], grounded_terms[9],a)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action5'):
-                        personality = ". Be nice"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action6'):
-                        personality = ". Be manipulative"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and manipulative personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action7'):
                         volume = 80 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
-                        personality = ". Be manipulative"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and manipulavire personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
                     if a == self.myactions.get('action8'):
-                        personality = ". Be nice"
+                        behaviour = " and to express my " + personality + " personality"
                         volume = 80 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -292,11 +300,12 @@ class StateMachine:
                     # while self.queue.empty() or self.queue.get()=="Not-Updated":
                     #     time.sleep(1)
                     # if self.queue.get()=="Updated":
-                    act = getcurrentstate.find_action_by_index (grounded_terms[0])
+                    act = getcurrentstate.find_action_by_index (grounded_terms[1])
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[6], 'ball', grounded_terms[5], grounded_terms[8], act)
                     natural_speech = natural_dict.get (a)
-                    personality = ". Be a snitch"
-                    sentence = openAI_client.start (natural_speech + personality)
+                    behaviour = " and to express my " + personality + " and snitch personality"
+                    sentence = openAI_client.start (natural_speech + behaviour)
+                    self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -325,8 +334,9 @@ class StateMachine:
                     act = getcurrentstate.find_action_by_index (grounded_terms[0])
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[7], 'ball', grounded_terms[6], grounded_terms[8], act)
                     natural_speech = natural_dict.get (a)
-                    personality = ". Be a snitch"
-                    sentence = openAI_client.start (natural_speech + personality)
+                    behaviour = " and to express my " + personality + " and snitch personality"
+                    sentence = openAI_client.start (natural_speech + behaviour)
+                    self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -356,8 +366,9 @@ class StateMachine:
                     act = getcurrentstate.find_action_by_index (grounded_terms[0])
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[8], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
-                    personality = ". Be a snitch"
-                    sentence = openAI_client.start (natural_speech + personality)
+                    behaviour = " and to express my " + personality + " personality"
+                    sentence = openAI_client.start (natural_speech + behaviour)
+                    self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -387,14 +398,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[6], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action12'):
-                        personality = ". Be nasty"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and nasty personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action14'):
-                        personality = ". Be manipulative"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
@@ -418,7 +431,7 @@ class StateMachine:
                         counter=0
                         while ("no" in str(answ)):
                             counter = counter+1
-                            answ = self.ask_and_listen("have you put the " + grounded_terms[11] + "into the " + grounded_terms[12] +"?")
+                            answ = self.ask_and_listen("have you done what I've asked?")
                             if counter == 3 :
                                 self.current_state = "state_one"
                                 break 
@@ -437,14 +450,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[6], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action13'):
-                        personality = ". Be nasty"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and nasty personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action15'):
-                        personality = ". Be manipulative"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -483,15 +498,17 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[6], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action16'):
-                        personality = ". Be nice"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and kind personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action18'):
-                        personality = ". Be kind"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
+                        self.list_sentence.append (sentence)
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     self.lock.acquire()
@@ -524,14 +541,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[6], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action17'):
-                        personality = ". Be nice"
+                        behaviour = " and to express my " + personality + " and personality"
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
-                        sentence = openAI_client.start (natural_speech + personality)
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                     if a == self.myactions.get('action19'):
-                        personality = ". Be kind"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
@@ -552,7 +571,7 @@ class StateMachine:
                     #self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     result_checking_effects = self.check_predicates(self.expected_effects[i])
                     if not result_checking_effects:
-                        self.ttsa.say("Have you understood what I've said? It happened when you weren't there!", self.configuration)
+                        self.ttsa.say("Have you understood what I've said?", self.configuration)
                         time.sleep (4)
                     self.add_or_replan (result_checking_effects)
 
@@ -564,14 +583,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[8], 'ball', grounded_terms[7], grounded_terms[10], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action20'):
-                        personality = ". Be nasty"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action22'):
-                        personality = ". Be persuasive"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
@@ -605,14 +626,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[8], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action21'):
-                        personality = ". Be nasty"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action23'):
-                        personality = ". Be persuasive"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
@@ -645,14 +668,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[8], 'ball', grounded_terms[7], grounded_terms[10], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action24'):
-                        personality = ". Be nice"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action26'):
-                        personality = ". Be persuasive"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
@@ -695,14 +720,16 @@ class StateMachine:
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[8], 'ball', grounded_terms[7], grounded_terms[9], act)
                     natural_speech = natural_dict.get (a)
                     if a == self.myactions.get('action25'):
-                        personality = ". Be gentle"
-                        sentence = openAI_client.start (natural_speech + personality)
+                        behaviour = " and to express my " + personality + " personality"
+                        sentence = openAI_client.start (natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
                     if a == self.myactions.get('action27'):
-                        personality = ". Be sweet"
-                        sentence = openAI_client.start ('ask' + natural_speech + personality)
+                        behaviour = " and to express my " + personality + " and persuasive personality"
+                        sentence = openAI_client.start (' ask ' + natural_speech + behaviour)
+                        self.list_sentence.append (sentence)
                         volume = 60 # il valore massimo, poi lo abbassiamo quando deve sparlare
                         self.audio.setOutputVolume(volume)
                         time.sleep(0.1)
@@ -721,7 +748,7 @@ class StateMachine:
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
                     #self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
-                    if a == self.myactions.get('action14'):
+                    if a == self.myactions.get('action27'):
                         answ = self.ask_and_listen("Have you done what I've asked you?")
                         counter=0
                         while ("no" in str(answ)):
@@ -743,8 +770,9 @@ class StateMachine:
                         #act = getcurrentstate.find_action_by_index ('test')
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage ('ag1', 'ball', 'ag2', 'p2', 'test')
                     natural_speech = natural_dict.get (a)
-                    personality = ". Be happy"
-                    sentence = openAI_client.start (natural_speech + personality)
+                    behaviour = " and to express my " + personality + " personality"
+                    sentence = openAI_client.start (natural_speech + behaviour)
+                    self.list_sentence.append (sentence)
                     self.lock.acquire()
                     self.predicates, self.pred_to_check, self.stablepred=self.mydatabase.read_from_database()
                     self.lock.release ()
@@ -759,8 +787,7 @@ class StateMachine:
                     # self.add_or_replan (result_checking_effects)
                     self.done = True
                         
-
-                
+              
 ########################################AGGIUNGERE PER OGNI AZIONE EVENTUALI CONDIZIONI DI VOLUME E CONTROLLARE LE CONDIZIONI GROUNDED DI OGNI AZIONE, POTREBBERO ESERCI DEGLI ERRORI
 
             ########################### SE IL MONITORAGGIO DA ESITO NEGATIVO METTERE UN BREAK, COSi TORNA ALLO STATO ONE
@@ -771,4 +798,5 @@ class StateMachine:
             else:
                 print ('escooooooooooooo')
                 break
+        print (self.list_sentence)
         self.current_state = "state_one" #  HERE WE REPLAN OUR PLANNER BECAUSE THE ACTION IS NOT IN THE LIST

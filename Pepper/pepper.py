@@ -1,3 +1,5 @@
+# documentazione per sdk e api: http://doc.aldebaran.com/2-5/dev/python/install_guide.html#python-install-guide
+#python 2.7 32bit
 # coding=utf-8
 import qi
 import argparse
@@ -6,7 +8,7 @@ import requests
 import time
 import math
 
-def face_detected (value):
+def face_detected (value): #esempio di callback
     print (value)
 
 
@@ -18,9 +20,9 @@ def set_autonomous_abilities(blinking, background, awareness, listening, speakin
         self.al.setAutonomousAbilityEnabled("SpeakingMovement", speaking)
 
 if __name__ == "__main__":
-    url='http://127.0.0.1:5000/'
+    #url='http://127.0.0.1:5000/'
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", type=str, default="130.251.13.116",
+    parser.add_argument("--ip", type=str, default="130.251.13.132", #cambia l'ip finale
                         help="Robot IP address. On robot or Local Naoqi: use '127.0.0.1'.")
     parser.add_argument("--port", type=int, default=9559,
                         help="Naoqi port number")
@@ -51,21 +53,8 @@ initial_motion_service.setAngles(["HeadPitch"], [-math.radians(35)], 0.2) #non f
 time.sleep (5)
 autonomousLife_service=session.service ("ALAutonomousLife")
 set_autonomous_abilities(True, True, True, True, True)
-facedetected = memory.subscriber("FaceDetected")
-connection = facedetected.signal.connect(face_detected)
+facedetected = memory.subscriber("FaceDetected") #questo permette la callback
+connection = facedetected.signal.connect(face_detected) #segnale della sottoscrizione
+face_det=memory.getData("FaceDetected")
 time.sleep (10)
-
-
-
-    # tts = session.service("ALTextToSpeech")
-    # #time.sleep ()
-    # response_get = requests.get(url+'planner_launch')
-    # my_plan = response_get.text
-    # if 'recognize' in my_plan:
-    #     print ("sono dentro")
-        
-    # if 'say_something' in my_plan:
-    #     print ("lallero")
-    #     tts.say('Hello!')
-    # print (my_plan)
     

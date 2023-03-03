@@ -17,10 +17,10 @@ class SensorsThread (Thread):
     def __init__(self, arg_session, lock, kill_event):
         Thread.__init__(self)
         #Memory
-        self.memory = arg_session.service("ALMemory") #tts2
+        self.memory = arg_session.service("ALMemory")
         
         #Face detection
-        self.face_detection = arg_session.service("ALFaceDetection") #tts1
+        self.face_detection = arg_session.service("ALFaceDetection")
         #pensare se aggiungere anche il microfono o meno, vedere piu avanti per capire come funziona
         #forse aggiungere anche il movimento tipo delle braccia
 

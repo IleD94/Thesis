@@ -33,13 +33,13 @@
         t21 - id 
         t22 - id 
         t23 - id
-        Giovanni - agent
+        Federico - agent
         Ilenia - agent
         robot - agent    
 )
     (:init
         (isAt t2 Ilenia room)
-        (isAt t3 Giovanni room)
+        (isAt t3 Federico room)
         (isAt t1 robot room)
         (hasStartAgent robot)
         (isEnd end)
@@ -103,22 +103,22 @@
         (disjuncted room box2)
         (isIn t8 ball emptySpace)
         (Know t4 Ilenia t2)
-        (Know t6 Giovanni t2)
+        (Know t6 Federico t2)
         (Know t9 Ilenia t8)
         (Know t5 Ilenia t3)
-        (Know t7 Giovanni t3)
-        (Know t10 Giovanni t8)
+        (Know t7 Federico t3)
+        (Know t10 Federico t8)
         (Willing t11 Ilenia t8)
-        (Willing t12 Giovanni t8)
+        (Willing t12 Federico t8)
         (Willing t13 Ilenia t2)
-        (NotSureIfWilling t14 Giovanni t3)
-        (Ignore t15 Giovanni t16)
+        (NotSureIfWilling t14 Federico t3)
+        (Ignore t15 Federico t16)
         (Ignore t23 Ilenia t16)
-        (disjuncted_a Ilenia Giovanni)
-        (disjuncted_a Giovanni Ilenia)
-        (disjuncted_a Giovanni robot)
+        (disjuncted_a Ilenia Federico)
+        (disjuncted_a Federico Ilenia)
+        (disjuncted_a Federico robot)
         (disjuncted_a Ilenia robot)
-        (disjuncted_a robot Giovanni)
+        (disjuncted_a robot Federico)
         (disjuncted_a robot Ilenia)
         
     )

@@ -25,6 +25,6 @@ def start (action_in_natural_languange):
     #     sentence = "dimmi qualcosa"
     # else:
     #     sentence = args.sentence
-    sentence = "Make a sentence using almost 35 words to " + action_in_natural_languange
+    sentence = "Create a sentence of around 35 words that expresses my intention to " + action_in_natural_languange
     res = req(sentence)
     return  res
