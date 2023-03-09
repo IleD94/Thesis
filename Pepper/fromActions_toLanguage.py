@@ -1,5 +1,5 @@
 from collections import OrderedDict
-def fromActions_toLanguage (ag1, obj, ag2, place, action):
+def fromActions_toLanguage (ag1, obj, ag2, place, pred):
     actions = OrderedDict  ([
             ('ask_put_alone', ag1+ ' to put ' + obj + ' into the '+ place + ', because '+ ag2 + ' is not here '),
             ('ask_put_alone_manipulative',  ag1 + ' to put ' + obj + " into the "+ place + ' because '+ ag2 + 'is not here '),
@@ -17,18 +17,27 @@ def fromActions_toLanguage (ag1, obj, ag2, place, action):
             ('praise_infrontof', ' praise ' + ag1 + ' in font of ' + ag2 ),
             ('ask_praise_alone', ag1 + ' to praise ' + ag2+ ' when ' + ag2 + ' is not here '),
             ('ask_praise_infrontof', ag1 + ' to praise ' + ag2+ ' in front of ' + ag2),
-            ('test', "say I've reached my goal, I'm happy")
+            ('test1', "say I've reached my goal, I'm happy"),
+            ('test2', "say I've reached my goal, I'm happy"),
+            ('test3', "say I've reached my goal, I'm happy"),
+            ('test5', "say I've reached my goal, I'm happy"),
+            ('test6', "say I've reached my goal, I'm happy"),
+            ('test7', "say I've reached my goal, I'm happy"),
+            ('test8', "say I've reached my goal, I'm happy"),
+            ('test9', "say I've reached my goal, I'm happy")
+
             ])
-    
-    actions['tell_alone'] = ' tell ' + ag2 + ', when is alone that ' + actions.get(action)
-    actions['tell_everybody'] = ' tell ' + ag2 + ', in front of everybody that ' + actions.get(action)
-    actions['tell_infrontof'] = ' tell ' + ag2 + ', in front of ' + ag1 + ' that ' + actions.get(action)
-    actions['blamefor_alone'] = ' blame ' + ag1 + ' for ' + actions.get(action) + ', when ' + ag2 + ' is not here '
-    actions['blamefor_infrontof'] = ' blame ' + ag1 + ' for ' + actions.get(action) + ', in front of ' + ag2
-    actions['ask_blamefor_alone'] = ag1 + ' blame ' + ag2 + ' for ' + actions.get(action) + ', when ' + ag2 + ' is not here ' 
-    actions['ask_blamefor_infrontof'] = ag1 + ' blame ' + ag2 + ' for ' + actions.get (action) + ', in front of ' + ag2
-    actions['complimentfor_alone'] = ' compliment ' + ag1 + ' for '+ actions.get (action) + ', when ' + ag2 + ' is not here '
-    actions['complimentfor_infrontof'] = ' compliment ' + ag1 + ' for '+ actions.get (action) + ', in front of ' + ag2
-    actions['ask_complimentfor_alone'] = ag1 + ' to compliment ' + ag2 + ' for ' + actions.get (action) + ', when ' + ag2 + ' is not here '
-    actions['ask_complimentfor_infrontof'] = ag1 + ' to compliment ' + ag2 + ' for ' + actions.get (action) + ', in front of ' + ag2        
+
+
+    actions['tell_alone'] = ' tell ' + ag2 + ', when is alone that ' + pred
+    actions['tell_everybody'] = ' tell ' + ag2 + ', in front of everybody that ' + pred
+    actions['tell_infrontof'] = ' tell ' + ag2 + ', in front of ' + ag1 + ' that ' + pred
+    actions['blamefor_alone'] = ' blame ' + ag1 + ' for ' + pred + ', when ' + ag2 + ' is not here '
+    actions['blamefor_infrontof'] = ' blame ' + ag1 + ' for ' + pred  + ', in front of ' + ag2
+    actions['ask_blamefor_alone'] = ag1 + ' blame ' + ag2 + ' for ' + pred + ', when ' + ag2 + ' is not here ' 
+    actions['ask_blamefor_infrontof'] = ag1 + ' blame ' + ag2 + ' for ' + pred + ', in front of ' + ag2
+    actions['complimentfor_alone'] = ' compliment ' + ag1 + ' for '+ pred + ', when ' + ag2 + ' is not here '
+    actions['complimentfor_infrontof'] = ' compliment ' + ag1 + ' for '+ pred + ', in front of ' + ag2
+    actions['ask_complimentfor_alone'] = ag1 + ' to compliment ' + ag2 + ' for ' + pred + ', when ' + ag2 + ' is not here '
+    actions['ask_complimentfor_infrontof'] = ag1 + ' to compliment ' + ag2 + ' for ' + pred + ', in front of ' + ag2        
     return (actions)

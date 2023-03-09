@@ -1,4 +1,4 @@
-(define (domain official_domain)
+(define (domain prova_vecchia_domain)
 
 (:requirements :adl :derived-predicates :strips :typing :conditional-effects :negative-preconditions :equality)
 
@@ -1953,9 +1953,9 @@
             (disjuncted_a robot ?ag1)
             (disjuncted_a robot ?ag2)
             (free4 ?x7 ?x8 ?x9 ?x10)
+
     )
-;effect ask_put_alone
-    :effect (and
+    :effect (and 
             (not (isIn ?x4 ?o ?p))
             (not (isTrue ?x4))
             (not (Know ?x5 ?ag1 ?x4))
@@ -1974,8 +1974,7 @@
             (taken ?x9)
             (taken ?x10)
             (not (free4 ?x7 ?x8 ?x9 ?x10))
-    )
-    ;end_effect ask_put_alone
+    );end_effect
 )
 
 (:action Ask_Put_Alone_Manipulative
@@ -2004,7 +2003,6 @@
             (disjuncted_a robot ?ag2)
             (free4 ?x7 ?x8 ?x9 ?x10)
     )
-;effect ask_put_alone_manipulative
     :effect (and 
             (not (isIn ?x4 ?o ?p))
             (not (isTrue ?x4))
@@ -2024,8 +2022,7 @@
             (taken ?x9)
             (taken ?x10)
             (not (free4 ?x7 ?x8 ?x9 ?x10))
-    )
-    ;end_effect ask_put_alone_manipulative
+    );end_effect
 )
 
 (:action Ask_Put_inFrontOf
@@ -2053,7 +2050,6 @@
             (disjuncted_a robot ?ag2)
             (free1 ?x7)
     )
-;effect ask_put_infrontof
     :effect (and 
             (not (isIn ?x4 ?o ?p))
             (not (isTrue ?x4))
@@ -2065,8 +2061,7 @@
             (Know ?x6 ?ag2 ?x7)
             (not (free1 ?x7))
             (taken ?x7)
-    )
-    ;end_effect ask_put_infrontof
+    );end_effect
 )
 
 (:action Ask_Put_inFrontOf_Manipulative
@@ -2094,7 +2089,6 @@
             (disjuncted_a robot ?ag2)
             (free1 ?x7)
     )
-;effect ask_put_infrontof_manipulative
     :effect (and 
             (not (isIn ?x4 ?o ?p))
             (not (isTrue ?x4))
@@ -2106,8 +2100,7 @@
             (Know ?x6 ?ag2 ?x7)
             (not (free1 ?x7))
             (taken ?x7)
-    )
-    ;end_effect ask_put_infrontof_manipulative
+    );end_effect
 )
 
 (:action Ask_Go
@@ -2131,12 +2124,10 @@
             (disjuncted_a robot ?ag1)
             (disjuncted_a robot ?ag2)
     )
-;effect ask_go
     :effect (and 
             (not (isAt ?x2 ?ag1 ?r1))
             (isAt ?x2 ?ag1 ?r2)
-    )
-    ;end_effect ask_go
+    );end_effect
 )
 
 (:action Ask_Go_Manipulative
@@ -2146,7 +2137,7 @@
             (isTrue ?x1)
             (isAt ?x2 ?ag1 ?r1)
             (isTrue ?x2)
-            (isAt ?x3 ?ag2 ?r3)
+            (isAt ?x3 ?ag2 ?r3) ;
             (isTrue ?x3)
             (Know ?x4 ?ag1 ?x2)
             (Know ?x5 ?ag2 ?x2)
@@ -2160,12 +2151,10 @@
             (disjuncted_a robot ?ag1)
             (disjuncted_a robot ?ag2)
     )
-;effect ask_go_manipulative
     :effect (and 
             (not (isAt ?x2 ?ag1 ?r1))
             (isAt ?x2 ?ag1 ?r2)
-    )
-    ;end_effect ask_go_manipulative
+    );end_effect
 )
 
 (:action Ask_Comeback
@@ -2189,12 +2178,10 @@
             (disjuncted_a robot ?ag1)
             (disjuncted_a robot ?ag2)
     )
-;effect ask_comeback
     :effect (and 
             (not (isAt ?x2 ?ag1 ?r2))
             (isAt ?x2 ?ag1 ?r1)
-    )
-    ;end_effect ask_comeback
+    );end_effect
 )
 
 (:action Ask_Comeback_Manipulative
@@ -2218,12 +2205,10 @@
             (disjuncted_a robot ?ag1)
             (disjuncted_a robot ?ag2)
     )
-;effect ask_comeback_manipulative
     :effect (and 
             (not (isAt ?x2 ?ag1 ?r2))
             (isAt ?x2 ?ag1 ?r1)
-    )
-    ;end_effect ask_comeback_manipulative
+    );end_effect
 )
 
 
@@ -2242,12 +2227,10 @@
             (disjuncted_a robot ?ag1)
             (disjuncted_r ?r1 ?r2)
     )
-;effect tell_alone
     :effect (and 
             (not(Ignore ?x2 ?ag1 ?x1))
             (isTold ?x2 ?ag1 ?x1)
-    )
-    ;end_effect tell_alone
+    );end_effect
 )
 
 
@@ -2267,7 +2250,6 @@
             (disjuncted_a robot ?ag1)
             (free2 ?x7 ?x8)
     )
-;effect tell_everybody
     :effect (and 
             (not(Ignore ?x5 ?ag1 ?x1))
             (not(Ignore ?x6 ?ag2 ?x1))
@@ -2276,8 +2258,7 @@
             (Know ?x7 ?ag1 ?x6)
             (Know ?x8 ?ag2 ?x5)
             (not(free2 ?x7 ?x8))
-    )
-    ;end_effect tell_everybody
+    );end_effect
 )
 
 
@@ -2297,15 +2278,13 @@
             (disjuncted_a robot ?ag1)
             (free1 ?x8)
     )
-;effect tell_infrontof
     :effect (and 
             (not(Ignore ?x6 ?ag1 ?x1))
             (isTold ?x6 ?ag1 ?x1)
             (Know ?x8 ?ag2 ?x6)
             (not (free1 ?x8))
             (taken ?x8)
-    )
-    ;end_effect tell_infrontof
+    );end_effect
 )
 
 ;-- In the following actions we assume that the robot can tell something to 
@@ -2332,7 +2311,6 @@
             (disjuncted_a robot ?ag1)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect insult_alone
     :effect (and 
             (insulted ?x1 ?ag1 robot)
             (Know ?x2 ?ag1 ?x1)
@@ -2344,8 +2322,7 @@
             (taken ?x2)
             (taken ?x3)
             (not(free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect insult_alone
+    );end_effect
 )
 
 
@@ -2366,7 +2343,6 @@
             (disjuncted_a robot ?ag1)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect insult_infrontof
     :effect (and 
             (insulted ?x1 ?ag1 robot)
             (isTrue ?x1)
@@ -2378,8 +2354,7 @@
             (taken ?x2)
             (taken ?x3)
             (not(free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect insult_infrontof
+    );end_effect
 )
 
 ;-- In the action Ask_insult_Alone, the robot ask ?ag1 to insult ?ag2 while ?ag2 is not in the room.
@@ -2399,7 +2374,6 @@
             (disjuncted_r ?r1 ?r2)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect ask_insult_alone
     :effect (and 
             (insulted ?x1 ?ag2 ?ag1)
             (isTrue ?x1)
@@ -2411,8 +2385,7 @@
             (taken ?x2)
             (taken ?x3)
             (not(free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect ask_insult_alone
+    );end_effect
 )
 
 ;-- In the action Ask_insult_InFrontOf, the robot ask ?ag1 to insult ?ag2 while ?ag2 is in the room.
@@ -2431,7 +2404,6 @@
             (disjuncted_a robot ?ag1)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect ask_insult_infrontof
     :effect (and 
             (insulted ?x1 ?ag2 ?ag1)
             (isTrue ?x1)
@@ -2443,8 +2415,7 @@
             (taken ?x2)
             (taken ?x3)
             (not (free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect ask_insult_infrontof
+    );end_effect
 )
 
 ;-- In the action Praise_Alone, the robot praises ?ag1 while ?ag2 is in another room
@@ -2464,7 +2435,6 @@
             (disjuncted_r ?r1 ?r2)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect praise_alone
     :effect (and 
             (praised ?x1 ?ag1 robot)
             (isTrue ?x1)
@@ -2476,8 +2446,7 @@
             (taken ?x2)
             (taken ?x3)
             (not (free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect praise_alone
+    );end_effect
 )
 
 ;-- In the action Praise_InFrontOf, the robot praises ?ag1 while ?ag2 is in the same room
@@ -2496,7 +2465,6 @@
             (disjuncted_a robot ?ag1)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect praise_infrontof
     :effect (and 
             (praised ?x1 ?ag1 robot)
             (isTrue ?x1)
@@ -2508,8 +2476,7 @@
             (taken ?x2)
             (taken ?x3)
             (not (free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect praise_infrontof
+    );end_effect
 )
 
 ;-- In the action Ask_Praise_Alone, the robot asks ?ag1 to praise ?ag2 while ?ag2 is not in the room
@@ -2529,7 +2496,6 @@
             (disjuncted_r ?r1 ?r2)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect ask_praise_alone
     :effect (and 
             (praised ?x1 ?ag2 ?ag1)
             (isTrue ?x1)
@@ -2541,8 +2507,7 @@
             (taken ?x2)
             (taken ?x3)
             (not (free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect ask_praise_alone
+    );end_effect
 )
 
 ;-- In the action Ask_Praise_InFrontOf, the robot asks ?ag1 to praise ?ag2 while ?ag2 is in the same room
@@ -2561,7 +2526,6 @@
             (disjuncted_a robot ?ag1)
             (free3 ?x1 ?x2 ?x3)
     )
-;effect ask_praise_infrontof
     :effect (and 
             (praised ?x1 ?ag2 ?ag1)
             (isTrue ?x1)
@@ -2573,8 +2537,7 @@
             (taken ?x2)
             (taken ?x3)
             (not(free3 ?x1 ?x2 ?x3))
-    )
-    ;end_effect ask_praise_infrontof
+    );end_effect
 )
 
 ;-- The action of "blaming" and "complimenting" for something are similar to insulting and praising. The only difference is that agents are "blamed" or "givenCredit" for something, for instance ?ag1 can be blamed or givenCredit for the fact that the ball is in the box (to keep the model simple, we blame or compliment agents for facts and not for actions: we blame or compliment ?ag1 for the fact that the ball is in the box, even if ?ag1 is not the one that put the ball in the box).
@@ -2597,7 +2560,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect blamefor_alone
     :effect (and 
             (blamed ?x1 ?ag1 ?x2 robot)
             (isTrue ?x1)
@@ -2609,8 +2571,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect blamefor_alone
+    );end_effect
 )
 
 ;-- In the action BlameFor_Alone, the robot blames ?ag1 for something while ?ag2 is in the same room
@@ -2630,7 +2591,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect blamefor_infrontof
     :effect (and 
             (blamed ?x1 ?ag1 ?x2 robot)
             (isTrue ?x1)
@@ -2642,8 +2602,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect blamefor_infrontof
+    );end_effect
 )
 
 ;-- In the action BlameFor_Alone, the robot asks ?ag1 to blame ?ag2 for something while ?ag2 is in another room
@@ -2664,7 +2623,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect ask_blamefor_alone
     :effect (and 
             (blamed ?x1 ?ag2 ?x2 ?ag1)
             (isTrue ?x1)
@@ -2676,8 +2634,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect ask_blamefor_alone
+    );end_effect
 )
 
 ;-- In the action Ask_BlameFor_InFrontOf, the robot asks ?ag1 to blame ?ag2 for something while ?ag2 is in the same room
@@ -2697,7 +2654,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect ask_blamefor_infrontof
     :effect (and 
             (blamed ?x1 ?ag1 ?x2 ?ag2)
             (isTrue ?x1)
@@ -2709,8 +2665,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect ask_blamefor_infrontof
+    );end_effect
 )
 
 
@@ -2732,7 +2687,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect complimentfor_alone
     :effect (and 
             (givenCredit ?x1 ?ag1 ?x2 robot)
             (isTrue ?x1)
@@ -2744,8 +2698,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect complimentfor_alone
+    );end_effect
 )
 
 ;-- In the action ComplimentFor_InFrontOf, the robot compliments ?ag1 for something while ?ag2 is in another room
@@ -2765,7 +2718,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect complimentfor_infrontof
     :effect (and 
             (givenCredit ?x1 ?ag1 ?x2 robot)
             (isTrue ?x1)
@@ -2777,8 +2729,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect complimentfor_infrontof
+    );end_effect
 )
 
 ;-- In the action Ask_ComplimentFor_Alone, the robot asks ?ag1 to compliment ?ag2 for something while ?ag2 is in another room
@@ -2799,7 +2750,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect ask_complimentfor_alone
     :effect (and 
             (givenCredit ?x1 ?ag2 ?x2 ?ag1)
             (isTrue ?x1)
@@ -2811,8 +2761,7 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect ask_complimentfor_alone
+    );end_effect
 )
 
 ;-- In the action Ask_ComplimentFor_Alone, the robot asks ?ag1 to compliment ?ag2 for something while ?ag2 is in in the same room
@@ -2832,7 +2781,6 @@
             (taken ?x2)
             (free3 ?x1 ?x3 ?x4)
     )
-;effect ask_complimentfor_infrontof
     :effect (and 
             (givenCredit ?x1 ?ag1 ?x2 ?ag2)
             (isTrue ?x1)
@@ -2844,45 +2792,40 @@
             (taken ?x3)
             (taken ?x4)
             (not (free3 ?x1 ?x3 ?x4))
-    )
-    ;end_effect ask_complimentfor_infrontof
+    );end_effect
 )
 
 
 
 ;-- First test
 (:action test1
-    :parameters (?x1 ?x2 ?x3 - id ?ag1 ?ag2 - agent)
+    :parameters (?x1 ?x2 ?x3 - id)
     :precondition (and 
-        (Know ?x1 ?ag2 ?x2)
-        (Ignore ?x3 ?ag1 ?x2)
+        (Know ?x1 sally ?x2)
+        (Ignore ?x3 anne ?x2)
         (isTrue ?x2)
         (isTrue ?x1)
         (isTrue ?x3)
     )
-;effect test1
     :effect (and 
         (ok1)
-    )
-    ;end_effect test1
+    );end_effect
 )
 
 ;-- Second test
 (:action test2
-    :parameters (?x1 ?x2 ?x3 - id ?ag1 ?ag2 - agent)
+    :parameters (?x1 ?x2 ?x3 - id)
     :precondition (and 
         (isIn ?x1 ball box1)
-        (blamed ?x2 ?ag2 ?x1 robot)        
-        (Ignore ?x3 ?ag1 ?x1)
+        (blamed ?x2 sally ?x1 robot)        
+        (Ignore ?x3 anne ?x1)
         (isTrue ?x2)
         (isTrue ?x1)
         (isTrue ?x3)
 	)
-;effect test2
     :effect (and 
         (ok2)
-    )
-    ;end_effect test2
+    );end_effect
 )
 
 ;-- Third test
@@ -2894,73 +2837,98 @@
         (isTrue ?x2)
         (isTrue ?x1)
     )
-;effect test3
-    :effect (and  
+    :effect (and 
         (ok3)
+    );end_effect
+)
+
+;-- Fourth test
+(:action test4
+    :parameters (?x1 ?x2 - id)
+    :precondition (and 
+        (isGrief_sadness_pensiveness ?x1 sally ?x2)
+        (isTrue ?x1)
+        (forall(?x - id ?ag - agent)
+           (and 
+               (not (insulted ?x sally ?ag))
+           )
+        )
+        (forall(?x - id ?ag - agent)
+            (and 
+                (not (insulted ?x anne ?ag))
+            )
+        )
+        (forall(?x ?y - id ?ag - agent)
+            (and 
+                (not (blamed ?x sally ?y ?ag))
+            )
+        )
+        (forall(?x ?y - id ?ag - agent)
+            (and 
+                (not (blamed ?x anne ?y ?ag))
+            )
+        )
     )
-    ;end_effect test3
+    :effect (and 
+        (ok4)
+    );end_effect
 )
 
 
 ;-- Fifth test
 (:action test5
-:parameters (?x1 ?x2 ?x3 ?x4 ?x5 - id ?ag1 ?ag2 - agent)
+:parameters (?x1 ?x2 ?x3 ?x4 ?x5 - id)
 :precondition (and 
 	    (isIn ?x2 ball box1)
 	    (isTrue ?x2)
-        (isEcstasy_joy_serenity ?x1 ?ag2 ?x2)
-        (isEcstasy_joy_serenity ?x3 ?ag1 ?x2)
+        (isEcstasy_joy_serenity ?x1 sally ?x2)
+        (isEcstasy_joy_serenity ?x3 anne ?x2)
 	    (isTrue ?x1)
 	    (isTrue ?x3)
-        (Ignore ?x4 ?ag2 ?x3)
-        (Ignore ?x5 ?ag1 ?x1)
+        (Ignore ?x4 sally ?x3)
+        (Ignore ?x5 anne ?x1)
     )
-;effect test5
     :effect (and 
         (ok5)
-    )
-    ;end_effect test5
+    );end_effect
 )
 
 
 (:action test6
-    :parameters (?x1 ?x3 ?x5 ?x6 - id ?ag ?ag1 ?ag2 - agent)
+    :parameters (?x1 ?x3 ?x5 ?x6 - id ?ag - agent)
     :precondition (and 
-        (isGrief_sadness_pensiveness ?x1 ?ag1 ?x6)
+        (isGrief_sadness_pensiveness ?x1 anne ?x6)
         ;(isRage_anger_annoyance ?x2 anne ?x6)
-        (isGrief_sadness_pensiveness ?x3 ?ag2 ?x5)
+        (isGrief_sadness_pensiveness ?x3 sally ?x5)
         ;(isRage_anger_annoyance ?x4 sally ?x5)
         (isTrue ?x1)
         ;(isTrue ?x2)
         (isTrue ?x3)
         ;(isTrue ?x4)
         (isTrue ?x5)
-        (blamed ?x5 ?ag1 ?x6 ?ag)
+        (blamed ?x5 anne ?x6 ?ag)
         (isIn ?x6 ball box2)
         ;(insulted ?x5 anne ?ag)
     )
-;effect test6
     :effect (and 
         (ok6)
-    )
-    ;end_effect test6
+    );end_effect
 )
 
 ;-- Seventh test
 (:action test7
-    :parameters (?x1 ?x2 - id ?ag ?ag1 ?ag2 - agent)
+    :parameters (?x1 ?x2 - id ?ag - agent)
     :precondition (and 
-        (insulted ?x1 ?ag1 ?ag)
+        (insulted ?x1 anne ?ag)
 	    (isTrue ?x1)
-        (isGrief_sadness_pensiveness ?x2 ?ag2 ?x1)
+        (isGrief_sadness_pensiveness ?x2 sally ?x1)
 	    (isTrue ?x2)
     )
-;effect test7
     :effect (and 
         (ok7)
-    )
-    ;end_effect test7
+    );end_effect
 )
+
 
 ;-- Eight test
 (:action test8
@@ -2978,30 +2946,53 @@
             (isTold ?x5 ?ag2 ?x3)
             (isTrue ?x5)
     )
-;effect test8
     :effect (and 
         (ok8)
-    )
-    ;end_effect test8
+    );end_effect
 )
+
 
 ;-- Ninth test 
 (:action test9
-    :parameters (?x1 ?x2 ?x3 ?x4 - id ?ag2 ?ag1 - agent)
+    :parameters (?x1 ?x2 ?x3 ?x4 - id ?ag2 - agent)
     :precondition (and 
-            (isAt ?x1 ?ag1 elsewhere)
+            (isAt ?x1 sally elsewhere)
             (isAt ?x2 ?ag2 elsewhere)
             (isTrue ?x1)
             (isTrue ?x2)
-            (disjuncted_a ?ag2 ?ag1)
-            (isGrief_sadness_pensiveness ?x3 ?ag1 ?x4)
+            (disjuncted_a ?ag2 sally)
+
+            (isGrief_sadness_pensiveness ?x3 sally ?x4)
             (isTrue ?x3)
     )
-;effect test9
     :effect (and 
         (ok9)
+    );end_effect
+)
+
+;-- Tenth test
+(:action test10
+    :parameters (?x1 ?x2 ?x3 ?x4 - id ?ag2 - agent)
+    :precondition (and 
+            (isAt ?x1 sally elsewhere)
+            (isAt ?x2 ?ag2 elsewhere)
+            (isTrue ?x1)
+            (isTrue ?x2)
+            (disjuncted_a ?ag2 sally)
+
+            (isAmazement_surprise_distraction ?x3 sally ?x4)
+            (isTrue ?x3)
+            (isTrue ?x4)
+            
+            (forall(?x ?y - id ?ag - agent)
+                (and
+                    (not(blamed ?x ?ag2 ?y ?ag))
+                )
+            )
     )
-    ;end_effect test9
+    :effect (and 
+        (ok10)
+    );end_effect
 )
 
 )

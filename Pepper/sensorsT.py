@@ -3,7 +3,6 @@ from threading import Thread, Lock
 import qi
 import argparse
 import sys
-from Queue import Queue
 import time
 import mydatabase
 
@@ -39,6 +38,9 @@ class SensorsThread (Thread):
         #kill event
         self.kill_event = kill_event
 
+        #flag problem pddl created 
+        self.flag = False
+
         #database functions
         self.mydatabase=mydatabase
 
@@ -48,8 +50,8 @@ class SensorsThread (Thread):
         self.myobj1=[]
 
     def create_predicates (self, people):
-        mypredicates=['isAt',"Know", "Willing", "NotSureIfWilling", "Ignore", "disjuncted_a"] #aggiungere isIn se si fa il riconoscimento degli oggetti
-        if self.round < 2 :
+            mypredicates=['isAt',"Know", "Willing", "NotWilling", "Desire", "disjuncted_a", "isEmpathic"] #aggiungere isIn se si fa il riconoscimento degli oggetti
+        #if self.round < 2 :
             predicates= []
             stablepred= []
             predicates_to_check = [] 
@@ -59,48 +61,71 @@ class SensorsThread (Thread):
             j=1
             k=5
             n=1
-            stablepred = ["(isAt t1 robot room)\n","(hasStartAgent robot)\n","(isEnd end)\n","(isStart t1)\n","(isStart t2)\n","(isStart t3)\n","(isStart t4)\n","(isStart t5)\n","(isStart t6)\n",
-                        "(isStart t7)\n","(isStart t8)\n","(isStart t9)\n","(isStart t10)\n","(isStart t11)\n","(isStart t12)\n","(isStart t13)\n","(isStart t14)\n",
-                        "(isStart t15)\n","(isStart t16)\n","(isStart t23)\n","(free t17)\n","(free t18)\n","(free t19)\n","(free t20)\n","(free t21)\n","(free t22)\n",
-                        "(disjuncted_id t17 t18)\n","(disjuncted_id t17 t19)\n","(disjuncted_id t17 t20)\n","(disjuncted_id t17 t21)\n","(disjuncted_id t17 t22)\n",
-                        "(disjuncted_id t18 t19)\n","(disjuncted_id t18 t20)\n","(disjuncted_id t18 t21)\n","(disjuncted_id t18 t22)\n","(disjuncted_id t19 t20)\n",
-                        "(disjuncted_id t19 t21)\n","(disjuncted_id t19 t22)\n","(disjuncted_id t20 t21)\n","(disjuncted_id t20 t22)\n","(disjuncted_id t21 t22)\n",
+            stablepred = ["(isAt t1 robot room)\n","(isEnd end)\n","(isTrue t1)\n","(isTrue t2)\n","(isTrue t3)\n","(isTrue t4)\n","(isTrue t5)\n","(isTrue t6)\n",
+                        "(isTrue t7)\n","(isTrue t8)\n","(isTrue t9)\n","(isTrue t10)\n","(isTrue t11)\n","(isTrue t12)\n","(isTrue t13)\n","(isTrue t14)\n",
+                        "(isTrue t15)\n","(isTrue t16)\n","(isTrue t17)\n","(isTrue t18)\n","(isTrue t19)\n","(isTrue t20)\n","(isTrue t21)\n","(isTrue t22)\n",
+                        "(taken t1)\n","(taken t2)\n","(taken t3)\n","(taken t4)\n","(taken t5)\n","(taken t6)\n",
+                        "(taken t7)\n","(taken t8)\n","(taken t9)\n","(taken t10)\n","(taken t11)\n","(taken t12)\n","(taken t13)\n","(taken t14)\n",
+                        "(taken t15)\n","(taken t16)\n","(taken t17)\n","(taken t18)\n","(taken t19)\n","(taken t20)\n","(taken t21)\n","(taken t22)\n",
+                        "(free1 t23)\n","(free1 t24)\n","(free2 t25 t26)\n","(free2 t27 t28)\n","(free2 t49 t50)\n","(free3 t29 t30 t31)\n",
+                        "(free3 t32 t33 t34)\n", "(free3 t35 t36 t37)\n", "(free3 t38 t39 t40)\n", "(free4 t41 t42 t43 t44)\n", "(free4 t45 t46 t47 t48)\n",
                         "(disjuncted_r room elsewhere)\n","(disjuncted_r elsewhere room)\n","(disjuncted ball box1)\n","(disjuncted box1 ball)\n","(disjuncted ball box2)\n",
                         "(disjuncted box2 ball)\n","(disjuncted emptySpace ball)\n","(disjuncted ball emptySpace)\n","(disjuncted box2 box1)\n","(disjuncted box1 box2)\n",
-                        "(disjuncted box1 emptySpace)\n","(disjuncted emptySpace box1)\n","(disjuncted box2 emptySpace)\n","(disjuncted emptySpace box2)\n","(disjuncted room box1)\n",
-                        "(disjuncted box1 room)\n","(disjuncted room emptySpace)\n","(disjuncted emptySpace room)\n","(disjuncted box2 room)\n","(disjuncted room box2)\n", "(isIn t8 ball emptySpace)\n"] 
-
+                        "(disjuncted box1 emptySpace)\n","(disjuncted emptySpace box1)\n","(disjuncted box2 emptySpace)\n","(disjuncted emptySpace box2)\n",
+                        "(isIn t8 ball emptySpace)\n", "(isIn g1 ball box1)\n", "(isIn g3 ball box1)\n", "(isIn g4 ball box2)\n",
+                        "(isIn g5 ball emptySpace)\n", ] 
+            #print (mypredicates)
             for predicate in mypredicates:
+                
                 for person in people:
                     if person != "":
                         if predicate == "isAt":
                             o=o+1
-                            predicates.append  ("("+ predicate +" t"+(str(o))+" "+ person + " room)\n")                   
+                            predicates.append  ("("+ predicate +" t"+(str(o))+" "+ person + " room)\n")    
+                        
+                        if predicate == "isEmpathic": # si possono mettere anche altri stati mentali
+                            predicates.append  ("("+ predicate +" "+ person + ")\n") 
+
                 if len (people)>1:
                     if predicate == "Know":
                         i=i+1
                         j=j+1
                         stablepred.append  ("("+ predicate +" t"+(str(i))+ " "+ people[0] + " t"+(str(j))+")\n")
+                        stablepred.append  ("("+ predicate +" t"+(str(i+1))+ " "+ people[0] + " t"+(str(j+1))+")\n")
                         k=k+1
                         n=n+1
                         stablepred.append  ("("+ predicate +" t"+(str(k))+ " "+ people[1] + " t"+(str(n))+")\n")
+                        stablepred.append  ("("+ predicate +" t"+(str(k+1))+ " "+ people[1] + " t"+(str(n+1))+")\n")
                         stablepred.append  ("("+ predicate +" t9 " + people[0] + " t8)\n")
-                        stablepred.append  ("("+ predicate +" t5 " + people[0] + " t3)\n")
-                        stablepred.append  ("("+ predicate +" t7 " + people[1] + " t3)\n")
                         stablepred.append  ("("+ predicate +" t10 " + people[1] + " t8)\n")
                         #stablepred.append  ("("+ predicate +" t23 " + people[0] + " t16)\n")
                     
                     if predicate == "Willing":
-                        stablepred.append  ("("+ predicate +" t11 " + people[0] + " t8)\n")
-                        stablepred.append  ("("+ predicate +" t12 " + people[1] + " t8)\n")
-                        stablepred.append  ("("+ predicate +" t13 " + people[0] + " t2)\n")
+                        stablepred.append  ("("+ predicate +" t14 " + people[0] + " g3)\n")
+                        stablepred.append  ("("+ predicate +" t18 " + people[0] + " g5)\n")
+                        stablepred.append  ("("+ predicate +" t22 " + people[0] + " g9)\n")
+                        stablepred.append  ("("+ predicate +" t15 " + people[1] + " g4)\n")
+                        stablepred.append  ("("+ predicate +" t13 " + people[1] + " g3)\n")
+                        stablepred.append  ("("+ predicate +" t17 " + people[1] + " g5)\n")
+                        stablepred.append  ("("+ predicate +" t19 " + people[1] + " g6)\n")
+                        
                     
-                    if predicate == "NotSureIfWilling":
-                        stablepred.append  ("("+ predicate +" t14 " + people[1] + " t3)\n")
+                    if predicate == "NotWilling":
+                        stablepred.append  ("("+ predicate +" t16 " + people[0] + " g4)\n")
+                        stablepred.append  ("("+ predicate +" t20 " + people[0] + " g7)\n")
+                        stablepred.append  ("("+ predicate +" t21 " + people[1] + " g8)\n")
 
-                    if predicate == "Ignore":
-                        stablepred.append  ("("+ predicate +" t15 " + people[1] + " t16)\n")
-                        stablepred.append  ("("+ predicate +" t23 " + people[0] + " t16)\n")
+                    if predicate == "Desire":
+                        stablepred.append  ("("+ predicate +" t11 " + people[1] + " g1)\n")
+                        stablepred.append  ("("+ predicate +" t12 " + people[0] + " g2)\n")
+                    
+                    if predicate == "isAt":
+                        stablepred.append  ("("+ predicate +" g7 " + people[0] + " elsewhere)\n")
+                        stablepred.append  ("("+ predicate +" g9 " + people[0] + " room)\n")
+                        stablepred.append  ("("+ predicate +" g6 " + people[1] + " elsewhere)\n")
+                        stablepred.append  ("("+ predicate +" g2 " + people[1] + " elsewhere)\n")
+                        stablepred.append  ("("+ predicate +" g8 " + people[1] + " room)\n")
+                        
 
                     if predicate == "disjuncted_a":
                         stablepred.append  ("("+ predicate +" "+ people[0]+" "+ people[1]+")\n")
@@ -109,6 +134,8 @@ class SensorsThread (Thread):
                         stablepred.append ("("+ predicate +" "+ people[0]+" robot)\n")
                         stablepred.append  ("("+ predicate +" robot "+ people[1]+")\n")
                         stablepred.append  ("("+ predicate +" robot "+ people[0]+")\n")
+
+
             
             predicates_to_check=predicates
             print (predicates_to_check)
@@ -116,23 +143,24 @@ class SensorsThread (Thread):
             indentation = "        "
             predicates = [indentation + x for x in new]
             "\n".join(predicates)
-            
+           #myobj1=[]
             for person in people:
-                myobj1.append("        " + person + " - agent")
-            myobj1.append("        robot - agent")
+                print (person)
+                myobj1.append("    " + person + " - agent")
+            myobj1.append("    robot - agent")
             myobj1='\n'.join(myobj1)
 
-        
-        else:
-            predicates_to_check = [] 
-            for predicate in mypredicates:
-                for person in people:
-                    if person != "":
-                        if predicate == "isAt":
-                            predicates.append  ("("+ predicate +" "+ person + " room)\n")
+
+            # predicates_to_check = [] 
+            # for predicate in mypredicates:
+            #     for person in people:
+            #         if person != "":
+            #             if predicate == "isAt":
+            #                 predicates.append  ("("+ predicate +" "+ person + " room)\n")
 
         #print (predicates)
-        return predicates_to_check, stablepred, predicates, myobj1
+        #self.flag = True
+            return predicates_to_check, stablepred, predicates, myobj1
 
     #This fnction get face recognition from the sensor
     def face_rec(self):
@@ -218,7 +246,8 @@ class SensorsThread (Thread):
         self.motion.setStiffnesses("Head", 1.0)
         self.motion.setAngles("Head", [0.0, 0.0], 0.1)
         while not self.kill_event.is_set():
-            self.round=+1
+            if self.flag == True:   
+                self.round=+1
             self.set_autonomous_abilities (False, False, False, False, False)
             self.face_rec()
             #time.sleep (1)

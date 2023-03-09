@@ -3,19 +3,80 @@ import zmq
 
 def write_pddl (predicates, goal, myobj1):
     
-    prob1 = "(define \n    (problem thesis_problem3)\n    (:domain"
-    test_dom="thesis_domain3"
+    prob1 = "(define \n    (problem official_problem)\n    (:domain"
+    test_dom="official_domain"
     mydom =  " "+ test_dom +") \n "
-    prob2 = """   (:objects \n        box1 - thing\n        box2 - thing
-        ball - thing\n        emptySpace - thing\n        room - place
-        elsewhere - place\n        start - id \n        end - id \n        t1 - id
-        t2 - id \n        t3 - id \n        t4 - id \n        t5 - id
-        t6 - id \n        t7 - id \n        t8 - id
-        t9 - id \n        t10 - id \n        t11 - id
-        t12 - id \n        t13 - id \n        t14 - id
-        t15 - id \n        t16 - id \n        t17 - id
-        t18 - id \n        t19 - id \n        t20 - id
-        t21 - id \n        t22 - id \n        t23 - id\n"""
+    prob2 = """   (:objects \n
+    box1 - thing
+    box2 - thing
+    emptySpace - thing
+    ball - thing
+    room - place
+    elsewhere - place
+
+    end - id
+    t1 - id
+    t2 - id
+    t3 - id
+    t4 - id
+    t5 - id
+    t6 - id
+    t7 - id
+    t8 - id
+    t9 - id
+    t10 - id
+    t11 - id 
+    t12 - id
+    t13 - id
+    t14 - id
+    t15 - id
+    t16 - id
+    t17 - id
+    t18 - id
+    t19 - id
+    t20 - id
+    t21 - id
+    t22 - id
+    t23 - id
+    t24 - id
+    t25 - id
+    t26 - id
+    t27 - id
+    t28 - id
+    t29 - id
+    t30 - id
+    t31 - id
+    t32 - id
+    t33 - id
+    t34 - id
+    t35 - id
+    t36 - id
+    t37 - id
+    t38 - id
+    t39 - id
+    t40 - id
+    t41 - id
+    t42 - id
+    t43 - id
+    t44 - id
+    t45 - id
+    t46 - id
+    t47 - id
+    t48 - id
+    t49 - id
+    t50 - id
+    t51 - id
+
+    g1 - id
+    g2 - id
+    g3 - id
+    g4 - id
+    g5 - id
+    g6 - id
+    g7 - id
+    g8 - id
+    g9 - id
+"""
 
     #ricordarsi di aggiungere anche gli altri oggetti, magari da sensore con i marker. Vedere come fare ##########################
     prob3 = "    \n)\n    (:init\n"
@@ -46,7 +107,7 @@ def socket_goal_exchange ():
     socket.send(b"Received")
     return goal
 
-def socket_predicates_exchange (response):
+def socket_predicates_exchange ():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5556")
@@ -56,3 +117,25 @@ def socket_predicates_exchange (response):
     #  Send reply back to client
     socket.send(b"Received")
     return predicates
+
+def socket_personality_exchange ():
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://*:5557")
+    personality = socket.recv()
+    print("Received request: %s" % personality)
+    # socket.send(b"Received")
+    #  Send reply back to client
+    socket.send(b"Received")
+    return personality
+
+def socket_language_exchange ():
+    context = zmq.Context()
+    socket = context.socket(zmq.REP)
+    socket.bind("tcp://*:5558")
+    language = socket.recv()
+    print("Received request: %s" % language)
+    # socket.send(b"Received")
+    #  Send reply back to client
+    socket.send(b"Received")
+    return language

@@ -30,11 +30,23 @@ def get_my_precondition (parameter_string):
 def find_action_by_index (myindex):
     for i, s in enumerate(my_plan_splitted):
         if myindex in s:
-            #print (s)
-            that_action = s.split (' ')
-            action = that_action [2]
-            print (action)
-            return action
+            #my_list = expected_effects_list[i]. split
+            for j, t in enumerate (expected_effects_list[i]):
+                
+                if myindex in t:
+                    f = expected_effects_list[i][j].split (" ")
+                    if f[1]==myindex and (f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(isEnd' and f[0] != '(blamed' and f[0] != '(isTold' and f[0] != '(insulted' and f[0] != '(praised' and f[0] != '(givenCredit') :
+                        return f
+            
+            for j, t in enumerate (expected_precondition_list[i]):
+                
+                if myindex in t:
+                    f = expected_precondition_list[i][j].split (" ")
+                    if f[1]==myindex and (f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(isEnd'):
+                        return f
+            
+            
+            #return action
 
 
 def get_expected_precondition(precondition_list, groundedterms,myparams, result): 
@@ -63,8 +75,8 @@ def get_expected_precondition(precondition_list, groundedterms,myparams, result)
 
 
 def start ():
-    global my_plan_splitted
-    url='http://127.0.0.1:5008/'
+    global my_plan_splitted, expected_effects_list, expected_precondition_list
+    url='http://127.0.0.1:5010/'
     mydir = "C:\Users\Lemonsucco\Desktop\Pepper\\"
     domain_path = mydir+'official_domain.pddl'
     my_domain_list=[]
@@ -80,10 +92,10 @@ def start ():
         'domain': my_domain_list,
         'problem': my_problem_list
     }
-
+    print ('Sto attendendo la risposta')
     headers= {'Content-Type':'application/json'}
     response_put= requests.put(url+'planner_launch', json=dict, headers=headers)
-
+    print ('Ho ricevuto la risposta')
     actions = OrderedDict  ([
             ('action1' , 'ask_put_alone'),
             ('action2' , 'ask_put_alone_manipulative'),
@@ -91,8 +103,8 @@ def start ():
             ('action4' , 'ask_put_infrontof_manipulative'),
             ('action5' , 'ask_go'),
             ('action6' , 'ask_go_manipulative'),
-            ('action7' , 'ask_comeback_manipulative'),
-            ('action8' , 'ask_comeback'),
+            ('action7' , 'ask_comeback'),
+            ('action8' , 'ask_comeback_manipulative'),
             ('action9' , 'tell_alone'),
             ('action10' , 'tell_everybody'),
             ('action11' , 'tell_infrontof'),
@@ -121,12 +133,13 @@ def start ():
             ('action34' , 'test8'),
             ('action35' , 'test9'),
             ])
-    print (response_put.text)
+    #print (response_put.text)
     if response_put.text == "Plan not found":
         print ('ci entro')
         return (None, None, None, [])
     
     else:
+        print ('plan_found')
         my_plan = response_put.text
         #print (my_plan)
         myplan2 = my_plan.replace("'", " ")
@@ -148,8 +161,8 @@ def start ():
         groundedterms=[]
         for i in range(len(my_string)):
             groundedterms.append(grounded_terms(my_string[i]))
-        print('/////////////////////////////')  
-        print (len(groundedterms)) #sono i termini grounded in ordine per azione lista di liste
+        # print('/////////////////////////////')  
+        # print (len(groundedterms)) #sono i termini grounded in ordine per azione lista di liste
         actions_plan=[]
         i=0
         for action in actions:
@@ -173,7 +186,7 @@ def start ():
             else:
                 break
                         
-        print (actions_plan)
+        #print (actions_plan)
         # print (my_plan_splitted)
         ind_precod_list_start=[]
         ind_parameters=[]
@@ -185,68 +198,53 @@ def start ():
         ind_effect_list_end=[]
         list_index_my_actions=[]
         k=0
+        j=0
         #print(my_plan)
         current_action = None
         all_action_indeces=[]
+        my_action_list_index=[]
+        all_action_indeces=[]
+
         for i, s in enumerate(my_domain_list):
             if '(:action ' in s:
-                    o=s.lower()
-                    a=o.split(' ')
-                    all_action_indeces. append(i)
-        for i, s in enumerate(my_domain_list):
-            #all_action_indeces=[]
-            for action in actions:
-                #all_action_indeces=[]
-                #print(action)
-                if '(:action ' in s:
-                    o=s.lower()
-                    a=o.split(' ')
-                    #all_action_indeces. append(i)
-                    #print (i)
-                    if (actions.get(action) == a[1]) and (actions.get(action) in actions_plan):
-                        #print('CI ENTROOOOOOOOOOOOOOOOOOOOOO')
-                        #print (s.lower())
-                        
+                o=s.lower()
+                a=o.split(' ')
+                all_action_indeces.append(i)
+                for action in actions_plan:
+                    
+                    if action == a[1]:
+                        my_action_list_index.append(i)
                         ind_precod_list_start.append(i+3)
                         ind_parameters.append(i+1)
-                        current_action = action
                         actions_list.append(a[1])
-                        list_index_my_actions.append (i)
-                        
-                        #print (current_action)
-                        break
-            if (':effect ' in s) and (current_action is not None):
-                ind_precod_list_end.append(i-1)
-                ind_effect_list_start.append (i+1)
-                current_action = None
-            # print(len(ind_effect_list_start))
-        ind = []
-        for elemento in list_index_my_actions:
-            if elemento in all_action_indeces:
-                ind.append(all_action_indeces.index(elemento))
-        print (ind)
-        print (list_index_my_actions)
-        print (all_action_indeces)    
-        print (len(all_action_indeces))
-        #print (actions_list)
-        k=0
-        print (ind_effect_list_start)
-        print (len (ind_effect_list_start))
-        for i, s in enumerate(my_domain_list):
-            #print (all_action_indeces[ind [k]+1])
-            if (';end_effect'in s) and (i >= ind_effect_list_start [k]) and (i <= all_action_indeces[ind [k]+1]) :
-                ind_effect_list_end.append(i)
-                if k<len(ind_effect_list_start)-1:
-                    #print (k)
-                    print ('sto qua')
-                    k=k+1
-        print (ind_effect_list_end)
+                        #break
+                    #print (s)
+            for action in actions_plan:
+                u = str(';effect '+ action)
+                if u == s :
+                    ind_precod_list_end.append(i-1)
+                    ind_effect_list_start.append (i+2)
+            
+            for action in actions_plan:
+                u = str(';end_effect '+ action)
+                if u == s :
+                    ind_effect_list_end.append(i-1)
+                    
+                
+        
+
+        # print (my_action_list_index)
+        # print (ind_precod_list_start)
+        # print (ind_precod_list_end)
+        # print (ind_effect_list_start)
+        # print (my_domain_list [ind_effect_list_end[0]])
+        # print (len(my_action_list_index))
         # print (ind_effect_list_start)
         # print (ind_effect_list_end)
-        # print (my_domain_list[1558])
-        #print (my_actions)
-        #print(ind_precod_list_start) #lista inizio precondizioni
-        #print(ind_precod_list_end) #lista fine precondizioni
+        # #print (my_domain_list[1558])
+        # print (my_actions)
+        # print(ind_precod_list_start) #lista inizio precondizioni
+        # print(ind_precod_list_end) #lista fine precondizioni
         # print (ind_parameters) #lista delle righe dei parametri
 
         effects_list=[]
@@ -332,10 +330,10 @@ def start ():
 
                     #print (my_expected_preconditios)
                     #print (my_expected_effects)
-        print (expected_effects_list, expected_precondition_list, actions, my_plan_splitted)
+        #print (expected_effects_list, expected_precondition_list, my_plan_splitted)
         return expected_effects_list, expected_precondition_list, actions, my_plan_splitted
 
-if __name__ == "__main__":
-    start ()
-    #action = find_action_by_index('t20')
+# if __name__ == "__main__":
+#     start ()
+#     action = find_action_by_index('t29')
     #print (action)

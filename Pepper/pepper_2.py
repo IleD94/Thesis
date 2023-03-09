@@ -8,7 +8,7 @@ from state_machine import StateMachine
 from sensorsT import SensorsThread
 from Queue import LifoQueue
 import threading
-import getcurrentstate
+import getcurrentstate2
 import zmq
 
 predicates_to_check=None
@@ -104,7 +104,8 @@ if __name__ == "__main__":
     print (myobj1)
     goal = functions.socket_goal_exchange()
     functions.write_pddl(predicates, goal, myobj1)
-    expected_effects_list, expected_precondition_list, actions, my_plan_splitted =getcurrentstate.start()
+    time.sleep (0.1)
+    expected_effects_list, expected_precondition_list, actions, my_plan_splitted =getcurrentstate2.start()
 
     #print (expected_effects_list)
     # create an instance of the state machine class
@@ -114,7 +115,7 @@ if __name__ == "__main__":
     # # start in state one
         current_state = "state_three"
         
-    machine = StateMachine(session, predicates_to_check, stablepred, expected_effects_list, expected_precondition_list, actions, my_plan_splitted, lock=lock, current_state=current_state)
+    machine = StateMachine(session, predicates_to_check, stablepred, expected_effects_list, expected_precondition_list, actions, my_plan_splitted, myobj1, lock=lock, current_state=current_state)
     
     
     # # loop forever

@@ -140,7 +140,7 @@
     (free3 t38 t39 t40)
 
     (free4 t41 t42 t43 t44)
-    (free4 t45 t46 t47 t48)  
+    (free4 t45 t46 t47 t48)
 
     ; This disjunction is useful to avoid reusing the same agent in some actions
     (disjuncted_a sally anne)
@@ -175,7 +175,7 @@
     (isAt t2 anne room)
     (isAt t3 sally room)
 
-    (Know t4 anne t2)
+    (Know t4 anne t2) 
     (Know t5 anne t3)
     (Know t6 sally t2)
     (Know t7 sally t3)

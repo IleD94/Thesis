@@ -21,4 +21,27 @@ while message=="Received":
     #  Get the reply.
     message = socket.recv()
     print(message)
+
+socket.connect("tcp://localhost:5557")
+message = "Received"
+#  Do 10 requests, waiting each time for a response
+while message=="Received":
+    print("Sending request")
+    goal= raw_input ('Can you give me my personality please, for example isHappy Robot: ')
+    socket.send(goal)
+    #  Get the reply.
+    message = socket.recv()
+    print(message)
+
+socket.connect("tcp://localhost:5558")
+message = "Received"
+#  Do 10 requests, waiting each time for a response
+while message=="Received":
+    print("Sending request")
+    goal= raw_input ('Can you give me my language please, for example isHappy Robot: ')
+    socket.send(goal)
+    #  Get the reply.
+    message = socket.recv()
+    print(message)
+
 exit (0)

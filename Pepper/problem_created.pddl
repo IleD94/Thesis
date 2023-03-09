@@ -1,86 +1,140 @@
 (define 
-    (problem thesis_problem3)
-    (:domain thesis_domain3) 
+    (problem official_problem)
+    (:domain official_domain) 
     (:objects 
-        box1 - thing
-        box2 - thing
-        ball - thing
-        emptySpace - thing
-        room - place
-        elsewhere - place
-        start - id 
-        end - id 
-        t1 - id
-        t2 - id 
-        t3 - id 
-        t4 - id 
-        t5 - id
-        t6 - id 
-        t7 - id 
-        t8 - id
-        t9 - id 
-        t10 - id 
-        t11 - id
-        t12 - id 
-        t13 - id 
-        t14 - id
-        t15 - id 
-        t16 - id 
-        t17 - id
-        t18 - id 
-        t19 - id 
-        t20 - id
-        t21 - id 
-        t22 - id 
-        t23 - id
-        Federico - agent
-        Ilenia - agent
-        robot - agent    
+
+    box1 - thing
+    box2 - thing
+    emptySpace - thing
+    ball - thing
+    room - place
+    elsewhere - place
+
+    end - id
+    t1 - id
+    t2 - id
+    t3 - id
+    t4 - id
+    t5 - id
+    t6 - id
+    t7 - id
+    t8 - id
+    t9 - id
+    t10 - id
+    t11 - id 
+    t12 - id
+    t13 - id
+    t14 - id
+    t15 - id
+    t16 - id
+    t17 - id
+    t18 - id
+    t19 - id
+    t20 - id
+    t21 - id
+    t22 - id
+    t23 - id
+    t24 - id
+    t25 - id
+    t26 - id
+    t27 - id
+    t28 - id
+    t29 - id
+    t30 - id
+    t31 - id
+    t32 - id
+    t33 - id
+    t34 - id
+    t35 - id
+    t36 - id
+    t37 - id
+    t38 - id
+    t39 - id
+    t40 - id
+    t41 - id
+    t42 - id
+    t43 - id
+    t44 - id
+    t45 - id
+    t46 - id
+    t47 - id
+    t48 - id
+    t49 - id
+    t50 - id
+    t51 - id
+
+    g1 - id
+    g2 - id
+    g3 - id
+    g4 - id
+    g5 - id
+    g6 - id
+    g7 - id
+    g8 - id
+    g9 - id
+    Ilenia - agent
+    robot - agent    
 )
     (:init
         (isAt t2 Ilenia room)
-        (isAt t3 Federico room)
+        (isEmpathic Ilenia)
         (isAt t1 robot room)
-        (hasStartAgent robot)
         (isEnd end)
-        (isStart t1)
-        (isStart t2)
-        (isStart t3)
-        (isStart t4)
-        (isStart t5)
-        (isStart t6)
-        (isStart t7)
-        (isStart t8)
-        (isStart t9)
-        (isStart t10)
-        (isStart t11)
-        (isStart t12)
-        (isStart t13)
-        (isStart t14)
-        (isStart t15)
-        (isStart t16)
-        (isStart t23)
-        (free t17)
-        (free t18)
-        (free t19)
-        (free t20)
-        (free t21)
-        (free t22)
-        (disjuncted_id t17 t18)
-        (disjuncted_id t17 t19)
-        (disjuncted_id t17 t20)
-        (disjuncted_id t17 t21)
-        (disjuncted_id t17 t22)
-        (disjuncted_id t18 t19)
-        (disjuncted_id t18 t20)
-        (disjuncted_id t18 t21)
-        (disjuncted_id t18 t22)
-        (disjuncted_id t19 t20)
-        (disjuncted_id t19 t21)
-        (disjuncted_id t19 t22)
-        (disjuncted_id t20 t21)
-        (disjuncted_id t20 t22)
-        (disjuncted_id t21 t22)
+        (isTrue t1)
+        (isTrue t2)
+        (isTrue t3)
+        (isTrue t4)
+        (isTrue t5)
+        (isTrue t6)
+        (isTrue t7)
+        (isTrue t8)
+        (isTrue t9)
+        (isTrue t10)
+        (isTrue t11)
+        (isTrue t12)
+        (isTrue t13)
+        (isTrue t14)
+        (isTrue t15)
+        (isTrue t16)
+        (isTrue t17)
+        (isTrue t18)
+        (isTrue t19)
+        (isTrue t20)
+        (isTrue t21)
+        (isTrue t22)
+        (taken t1)
+        (taken t2)
+        (taken t3)
+        (taken t4)
+        (taken t5)
+        (taken t6)
+        (taken t7)
+        (taken t8)
+        (taken t9)
+        (taken t10)
+        (taken t11)
+        (taken t12)
+        (taken t13)
+        (taken t14)
+        (taken t15)
+        (taken t16)
+        (taken t17)
+        (taken t18)
+        (taken t19)
+        (taken t20)
+        (taken t21)
+        (taken t22)
+        (free1 t23)
+        (free1 t24)
+        (free2 t25 t26)
+        (free2 t27 t28)
+        (free2 t49 t50)
+        (free3 t29 t30 t31)
+        (free3 t32 t33 t34)
+        (free3 t35 t36 t37)
+        (free3 t38 t39 t40)
+        (free4 t41 t42 t43 t44)
+        (free4 t45 t46 t47 t48)
         (disjuncted_r room elsewhere)
         (disjuncted_r elsewhere room)
         (disjuncted ball box1)
@@ -95,35 +149,15 @@
         (disjuncted emptySpace box1)
         (disjuncted box2 emptySpace)
         (disjuncted emptySpace box2)
-        (disjuncted room box1)
-        (disjuncted box1 room)
-        (disjuncted room emptySpace)
-        (disjuncted emptySpace room)
-        (disjuncted box2 room)
-        (disjuncted room box2)
         (isIn t8 ball emptySpace)
-        (Know t4 Ilenia t2)
-        (Know t6 Federico t2)
-        (Know t9 Ilenia t8)
-        (Know t5 Ilenia t3)
-        (Know t7 Federico t3)
-        (Know t10 Federico t8)
-        (Willing t11 Ilenia t8)
-        (Willing t12 Federico t8)
-        (Willing t13 Ilenia t2)
-        (NotSureIfWilling t14 Federico t3)
-        (Ignore t15 Federico t16)
-        (Ignore t23 Ilenia t16)
-        (disjuncted_a Ilenia Federico)
-        (disjuncted_a Federico Ilenia)
-        (disjuncted_a Federico robot)
-        (disjuncted_a Ilenia robot)
-        (disjuncted_a robot Federico)
-        (disjuncted_a robot Ilenia)
+        (isIn g1 ball box1)
+        (isIn g3 ball box1)
+        (isIn g4 ball box2)
+        (isIn g5 ball emptySpace)
         
     )
     (:goal (and
-        (ok)
+        (ok8)
     )  
 )    
 )
