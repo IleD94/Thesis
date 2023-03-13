@@ -29,9 +29,9 @@ def fromActions_toLanguage (ag1, obj, ag2, place, pred):
             ])
 
 
-    actions['tell_alone'] = ' tell ' + ag2 + ' something that he does not know: ' + pred
-    actions['tell_everybody'] = ' tell ' + ag2 + ' something that does not know: ' + pred
-    actions['tell_infrontof'] = ' tell ' + ag2 + ' something that does not know: ' + pred
+    actions['tell_alone'] = ' tell ' + ag1 + ' something that he does not know: ' + pred
+    actions['tell_everybody'] = ' tell ' + ag1 + ' something that does not know: ' + pred
+    actions['tell_infrontof'] = ' tell ' + ag1 + ' something that does not know: ' + pred
     actions['blamefor_alone'] = ' blame ' + ag1 + ' for ' + pred
     actions['blamefor_infrontof'] = ' blame ' + ag1 + ' for ' + pred
     actions['ask_blamefor_alone'] = ag1 + ' to blame ' + ag2 + ' for ' + pred 

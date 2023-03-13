@@ -35,7 +35,7 @@ def find_action_by_index (myindex):
                 
                 if myindex in t:
                     f = expected_effects_list[i][j].split (" ")
-                    if f[1]==myindex and (f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(isEnd' and f[0] != '(blamed' and f[0] != '(isTold' and f[0] != '(insulted' and f[0] != '(praised' and f[0] != '(givenCredit') :
+                    if f[1]==myindex and (f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(free1' and f[0] != '(free2' and f[0] != '(free3' and f[0] != '(free4' and f[0] != '(taken' and f[0] != '(isTold' and f[0] != '(isTrue' and f[0] != '(isEnd' and f[0] != '(blamed' and f[0] != '(isTold' and f[0] != '(insulted' and f[0] != '(praised' and f[0] != '(givenCredit' and not '(not(' in f[0]) :
                         return f
             
             for j, t in enumerate (expected_precondition_list[i]):

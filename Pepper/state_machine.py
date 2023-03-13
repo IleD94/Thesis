@@ -70,29 +70,29 @@ class StateMachine:
         for element in mypredicates:
             if element not in list_of_expected_predicates:
                 boolean_check.append (True)
-        else:
-            for element in self.pred_to_check:
-                #expected_pred=list_of_expected_predicates
-                print (element)
-                element = element.split(' ')
-                for k,s in enumerate (list_of_expected_predicates):
-                    if element[0] in s:
-                        print (element[0])
-                        print (element[2])
-                        if element [2] in s:
-                            print ('oooooooooooooooooooooooooook')
-                            boolean_check.append (True)
-                    if 'not ' in s:
-                        for mypredicate in mypredicates:
-                            if  (mypredicate in s) and (mypredicate not in self.pred_to_check): ###controllare la seconda parte di questa condizione, potrebbe essere sbagliata
+            else:
+                for element in self.pred_to_check:
+                    #expected_pred=list_of_expected_predicates
+                    print (element)
+                    element = element.split(' ')
+                    for k,s in enumerate (list_of_expected_predicates):
+                        if element[0] in s:
+                            print (element[0])
+                            print (element[2])
+                            if element [2] in s:
+                                print ('oooooooooooooooooooooooooook')
                                 boolean_check.append (True)
+                        if 'not ' in s:
+                            for mypredicate in mypredicates:
+                                if  (mypredicate in s) and (mypredicate not in self.pred_to_check): ###controllare la seconda parte di questa condizione, potrebbe essere sbagliata
+                                    boolean_check.append (True)
             if boolean_check == []:
                 boolean_check.append(False)
             print (boolean_check)
             return (all(boolean_check))
             
                             
-    def add_or_replan( self, result_checking):
+    def add_or_replan(self, result_checking):
         if not (result_checking):
             myinput = raw_input ('condition are not satisfied, do you want to replan or to add some predicates? [replan, add]')
             if (myinput == 'replan'):
@@ -694,7 +694,7 @@ class StateMachine:
                     # while self.queue.empty() or self.queue.get()=="Not-Updated":
                     #     time.sleep(1)
                     # if self.queue.get()=="Updated":
-                    act = getcurrentstate2.find_action_by_index (grounded_terms[0])
+                    act = getcurrentstate2.find_action_by_index (grounded_terms[1])
                     natural_predicates = fromPredicates_toLanguage.fromPredicates_toLanguage (act)
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[7], 'ball', grounded_terms[8], grounded_terms[10], natural_predicates)
                     natural_speech = natural_dict.get (a)
@@ -749,7 +749,7 @@ class StateMachine:
                     # while self.queue.empty() or self.queue.get()=="Not-Updated":
                     #     time.sleep(1)
                     # if self.queue.get()=="Updated":
-                    act = getcurrentstate2.find_action_by_index (grounded_terms[0])
+                    act = getcurrentstate2.find_action_by_index (grounded_terms[1])
                     natural_predicates = fromPredicates_toLanguage.fromPredicates_toLanguage (act)
                     natural_dict=fromActions_toLanguage.fromActions_toLanguage (grounded_terms[7], 'ball', grounded_terms[8], grounded_terms[9], natural_predicates)
                     natural_speech = natural_dict.get (a)
