@@ -95,27 +95,27 @@ if __name__ == "__main__":
     stablepred = sensors.stablepred
 
     predicates = sensors.predicates
-    myobj1 = sensors.myobj1
+    #myobj1 = sensors.myobj1
 
-    while myobj1 == []:
+    while predicates == []:
         time.sleep(0.1)
-        myobj1 = sensors.myobj1
-    #functions_print ()
-    print (myobj1)
-    goal = functions.socket_goal_exchange()
-    functions.write_pddl(predicates, goal, myobj1)
-    time.sleep (0.1)
-    expected_effects_list, expected_precondition_list, actions, my_plan_splitted =getcurrentstate2.start()
+        predicates = sensors.predicates
+    # #functions_print ()
+    # print (myobj1)
+    # goal = functions.socket_goal_exchange()
+    # functions.write_pddl(predicates, goal, myobj1)
+    # time.sleep (0.1)
+    # expected_effects_list, expected_precondition_list, actions, my_plan_splitted =getcurrentstate2.start()
 
     #print (expected_effects_list)
     # create an instance of the state machine class
-    if my_plan_splitted == []:
-        current_state = "state_one"
-    else:
-    # # start in state one
-        current_state = "state_three"
+    # if my_plan_splitted == []:
+    #     current_state = "state_one"
+    # else:
+    # # # start in state one
+    current_state = "state_one"
         
-    machine = StateMachine(session, predicates_to_check, stablepred, expected_effects_list, expected_precondition_list, actions, my_plan_splitted, myobj1, lock=lock, current_state=current_state)
+    machine = StateMachine(session, predicates_to_check, stablepred, lock=lock, current_state=current_state)
     
     
     # # loop forever

@@ -76,7 +76,7 @@ def get_expected_precondition(precondition_list, groundedterms,myparams, result)
 
 def start ():
     global my_plan_splitted, expected_effects_list, expected_precondition_list
-    url='http://127.0.0.1:5010/'
+    url='http://127.0.0.1:5000/'
     mydir = "C:\Users\Lemonsucco\Desktop\Pepper\\"
     domain_path = mydir+'official_domain.pddl'
     my_domain_list=[]
@@ -336,4 +336,4 @@ def start ():
 # if __name__ == "__main__":
 #     start ()
 #     action = find_action_by_index('t29')
-    #print (action)
+#     print (action)

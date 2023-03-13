@@ -100,12 +100,12 @@ def socket_goal_exchange ():
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     socket.bind("tcp://*:5555")
-    goal = socket.recv()
-    print("Received request: %s" % goal)
+    msg = socket.recv()
+    print("Received request: %s" % msg)
     # socket.send(b"Received")
     #  Send reply back to client
     socket.send(b"Received")
-    return goal
+    return msg
 
 def socket_predicates_exchange ():
     context = zmq.Context()
@@ -118,24 +118,3 @@ def socket_predicates_exchange ():
     socket.send(b"Received")
     return predicates
 
-def socket_personality_exchange ():
-    context = zmq.Context()
-    socket = context.socket(zmq.REP)
-    socket.bind("tcp://*:5557")
-    personality = socket.recv()
-    print("Received request: %s" % personality)
-    # socket.send(b"Received")
-    #  Send reply back to client
-    socket.send(b"Received")
-    return personality
-
-def socket_language_exchange ():
-    context = zmq.Context()
-    socket = context.socket(zmq.REP)
-    socket.bind("tcp://*:5558")
-    language = socket.recv()
-    print("Received request: %s" % language)
-    # socket.send(b"Received")
-    #  Send reply back to client
-    socket.send(b"Received")
-    return language

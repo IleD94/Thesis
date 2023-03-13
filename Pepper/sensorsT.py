@@ -47,7 +47,7 @@ class SensorsThread (Thread):
         self.stablepred = []
         self.predicates = []
         self.predicates_to_check=[]
-        self.myobj1=[]
+        #self.myobj1=[]
 
     def create_predicates (self, people):
             mypredicates=['isAt',"Know", "Willing", "NotWilling", "Desire", "disjuncted_a", "isEmpathic"] #aggiungere isIn se si fa il riconoscimento degli oggetti
@@ -55,7 +55,7 @@ class SensorsThread (Thread):
             predicates= []
             stablepred= []
             predicates_to_check = [] 
-            myobj1=[]
+            #myobj1=[]
             o=1
             i=3
             j=1
@@ -84,7 +84,7 @@ class SensorsThread (Thread):
                             predicates.append  ("("+ predicate +" t"+(str(o))+" "+ person + " room)\n")    
                         
                         if predicate == "isEmpathic": # si possono mettere anche altri stati mentali
-                            predicates.append  ("("+ predicate +" "+ person + ")\n") 
+                           stablepred.append  ("("+ predicate +" "+ person + ")\n") 
 
                 if len (people)>1:
                     if predicate == "Know":
@@ -144,11 +144,11 @@ class SensorsThread (Thread):
             predicates = [indentation + x for x in new]
             "\n".join(predicates)
            #myobj1=[]
-            for person in people:
-                print (person)
-                myobj1.append("    " + person + " - agent")
-            myobj1.append("    robot - agent")
-            myobj1='\n'.join(myobj1)
+            # for person in people:
+            #     print (person)
+            #     myobj1.append("    " + person + " - agent")
+            # myobj1.append("    robot - agent")
+            # myobj1='\n'.join(myobj1)
 
 
             # predicates_to_check = [] 
@@ -160,7 +160,7 @@ class SensorsThread (Thread):
 
         #print (predicates)
         #self.flag = True
-            return predicates_to_check, stablepred, predicates, myobj1
+            return predicates_to_check, stablepred, predicates
 
     #This fnction get face recognition from the sensor
     def face_rec(self):
@@ -180,12 +180,12 @@ class SensorsThread (Thread):
         if not self.face_detection.isRecognitionEnabled():
             self.face_detection.setRecognitionEnabled(True)
         
-        myfriends= self.face_detection.getLearnedFacesList()
-        #print (myfriends)
+        myfriends = self.face_detection.getLearnedFacesList()
+        #print (len(myfriends))
 
         #FORSE SERVE UN WHILE O UNA SOTTOSCRIZIONE CON CALLBACK QUA, COSi si possono fare i predicati?
-        counter = [0,0,0,0]
-        myfriends=['Ilenia', 'Federico', 'Giovanni', 'Serena']
+        counter = [0,0,0,0,0]
+        # myfriends=['Ilenia', 'Federico', 'Giovanni', 'Serena']
         #self.queue.put("Not-Updated")
         flag  = True
         while flag:
@@ -203,8 +203,7 @@ class SensorsThread (Thread):
                 #print (my_people)
             for i in range (len (myfriends)):
                 if myfriends[i] in my_people:
-                    counter [i]=counter[i]+1
-                    #print (counter)
+                    counter [i] = counter[i]+1
                 if (counter[i]>4):
                     #print (counter[i])
                     people.append (myfriends[i])
@@ -223,7 +222,7 @@ class SensorsThread (Thread):
         print ("THIS" + str(people))
         mynumber = len(my_people)
         #print (mynumber)
-        self.predicates_to_check, self.stablepred, self.predicates, self.myobj1=self.create_predicates(people)
+        self.predicates_to_check, self.stablepred, self.predicates=self.create_predicates(people)
         self.lock.acquire()
         self.mydatabase.add_to_database(self.predicates,self.predicates_to_check,self.stablepred)
         self.lock.release()

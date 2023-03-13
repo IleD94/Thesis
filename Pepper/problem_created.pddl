@@ -72,12 +72,13 @@
     g7 - id
     g8 - id
     g9 - id
-    Ilenia - agent
-    robot - agent    
+        Federico - agent
+        Ilenia - agent
+        robot - agent    
 )
     (:init
-        (isAt t2 Ilenia room)
-        (isEmpathic Ilenia)
+        (isAt t2 Federico room)
+        (isAt t3 Ilenia room)
         (isAt t1 robot room)
         (isEnd end)
         (isTrue t1)
@@ -154,10 +155,41 @@
         (isIn g3 ball box1)
         (isIn g4 ball box2)
         (isIn g5 ball emptySpace)
+        (isAt g7 Federico elsewhere)
+        (isAt g9 Federico room)
+        (isAt g6 Ilenia elsewhere)
+        (isAt g2 Ilenia elsewhere)
+        (isAt g8 Ilenia room)
+        (Know t4 Federico t2)
+        (Know t5 Federico t3)
+        (Know t6 Ilenia t2)
+        (Know t7 Ilenia t3)
+        (Know t9 Federico t8)
+        (Know t10 Ilenia t8)
+        (Willing t14 Federico g3)
+        (Willing t18 Federico g5)
+        (Willing t22 Federico g9)
+        (Willing t15 Ilenia g4)
+        (Willing t13 Ilenia g3)
+        (Willing t17 Ilenia g5)
+        (Willing t19 Ilenia g6)
+        (NotWilling t16 Federico g4)
+        (NotWilling t20 Federico g7)
+        (NotWilling t21 Ilenia g8)
+        (Desire t11 Ilenia g1)
+        (Desire t12 Federico g2)
+        (disjuncted_a Federico Ilenia)
+        (disjuncted_a Ilenia Federico)
+        (disjuncted_a Ilenia robot)
+        (disjuncted_a Federico robot)
+        (disjuncted_a robot Ilenia)
+        (disjuncted_a robot Federico)
+        (isEmpathic Federico)
+        (isEmpathic Ilenia)
         
     )
     (:goal (and
-        (ok8)
+        (ok5)
     )  
 )    
 )

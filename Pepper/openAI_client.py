@@ -15,7 +15,7 @@ def req(text):
 
 
 # Press the green button in the gutter to run the script.
-def start (action_in_natural_languange):
+def start (language, personality, action_in_natural_languange):
     description = 'This is the server for OpenAI.'
     # parser = argparse.ArgumentParser(description=description)
     # # Add long and short argument
@@ -25,6 +25,6 @@ def start (action_in_natural_languange):
     #     sentence = "dimmi qualcosa"
     # else:
     #     sentence = args.sentence
-    sentence = "Create a sentence of around 35 words that expresses my intention to " + action_in_natural_languange
+    sentence = "Create an " + language + " sentence of about 35 words in a " + personality + " tone in which you " + action_in_natural_languange
     res = req(sentence)
     return  res

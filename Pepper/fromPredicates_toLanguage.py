@@ -14,7 +14,15 @@ def fromPredicates_toLanguage (pred):
             ('(isDependent',  pred [1] + 'is Dependent' ),
             ('(isEmpathic',  pred [1] + ' is empathic'),
             ('(isNeutral', pred [1] + ' is Neutral' ),
-            ('isIn', pred [2] +' is in' + pred [3]),
-            ('(Know', pred [1] + "knows something"),
+            ('(isIn', pred [2] +' is in ' + pred [3]),
+            ('(Know', pred [1] + " knows something"),
+            ('(insulted', pred [2] + " was insulted by " + pred [3]),
+            ('(praised', pred [2] + " was praised by " + pred [3]),
             ])
-    return predicates.get(pred[0])
+    
+    if (len (pred))>4:
+        predicates['(blamed'] = pred [2] + " was blamed by " + pred [4]
+        predicates ['(givenCredit'] = pred [2] + " was given credit by " + pred [4]
+            
+    mypred = predicates.get(pred[0])
+    return mypred
