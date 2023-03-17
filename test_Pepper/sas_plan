@@ -1,0 +1,6 @@
+(ask_go t1 t3 t2 t7 t5 t19 g6 ilenia giovanni room elsewhere room)
+(ask_insult_alone t29 t30 t31 t1 t2 t3 giovanni ilenia room elsewhere)
+(ask_comeback_manipulative t1 t3 t2 t7 t5 t21 g8 ilenia giovanni room elsewhere room)
+(tell_infrontof t29 t1 t3 t2 t31 t30 t23 ilenia giovanni room)
+(test3 t29 t31 ilenia giovanni)
+; cost = 5 (unit cost)
